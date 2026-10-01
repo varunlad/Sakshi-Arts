@@ -2,181 +2,166 @@
 import os
 
 def create_file(path, content):
+    dir_name = os.path.dirname(path)
+    if dir_name:
+        os.makedirs(dir_name, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write(content.strip() + "\n")
     print(f"  [+] Updated: {path}")
 
 def main():
     print("=" * 60)
-    print("✨ Fixing Mobile Horizontal Overflow & Restoring Sticky DM Button...")
+    print("✨ Removing Sticky CTA and Hero Compass Button from the codebase...")
     print("=" * 60)
 
     # ==========================================
-    # UPDATE CSS (Fix horizontal scroll & mobile CTA positioning)
+    # 1. UPDATE HERO COMPONENT (Remove the compass button)
     # ==========================================
-    create_file("client/src/index.css", """
-:root {
-  --canvas: #F4EFEB; --surface: #ECE3D7; --ink: #221C18; --muted: #6E6157;
-  --sunset: #D9886A; --sunset-dark: #A74E2B; --border: #DCD0C0;
-  --font-sans: 'Inter', sans-serif; --font-serif: 'Playfair Display', serif; --font-hand: 'Caveat', cursive;
-  --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    create_file("client/src/components/Hero.jsx", """
+import React from 'react';
+import { Instagram, Facebook, Youtube, Mail } from 'lucide-react';
+import Hero_Img from '../assets/Images/Hero_Pic.jpeg';
 
-  --glass-bg: rgba(255, 252, 248, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.85);
-  --glass-blur: blur(20px);
-  --glass-shadow: 0 20px 40px rgba(40, 30, 20, 0.08), inset 0 0 20px rgba(255, 255, 255, 0.7);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body {
-  color: var(--ink); font-family: var(--font-sans);
-  overflow-x: hidden !important; /* Strict protection against horizontal scroll */
-  scroll-behavior: smooth;
-  background-color: var(--canvas);
-  width: 100%;
-  position: relative;
-}
+export default function Hero({ openIG, openFB, openYT, openMail }) {
+  return (
+    <header className="hero" style={{ padding: '3rem 1.5rem 2rem' }}>
+      <div className="reveal-1 standard-img-card hero-pic" style={{ marginBottom: '2rem' }}>
+        <img 
+          src={Hero_Img}
+          alt="Sakshi Lad" 
+          onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80"; }}
+        />
+      </div>
 
-::selection { background-color: var(--sunset); color: #fff; }
-::-moz-selection { background-color: var(--sunset); color: #fff; }
+      <h2 className="font-serif reveal-2" style={{ fontSize: '2.5rem', color: '#D9886A', marginBottom: '0.2rem' }}>Sakshi Lad Art</h2>
+      <span className="font-hand reveal-2" style={{ fontSize: '1.6rem', marginBottom: '1.5rem', display: 'block' }}>about the artist</span>
 
-.ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; overflow: hidden; pointer-events: none; background: #F4EFEB; }
-.ambient-glow-1 { position: absolute; top: -10%; left: -10%; width: 65vw; height: 65vw; border-radius: 50%; background: radial-gradient(circle, rgba(240, 185, 155, 0.8) 0%, transparent 70%); filter: blur(70px); animation: ambientDrift 18s infinite alternate; }
-.ambient-glow-2 { position: absolute; bottom: -10%; right: -10%; width: 75vw; height: 75vw; border-radius: 50%; background: radial-gradient(circle, rgba(195, 215, 190, 0.7) 0%, transparent 70%); filter: blur(70px); animation: ambientDrift 22s infinite alternate-reverse; }
-.ambient-glow-3 { position: absolute; top: 40%; left: 30%; width: 50vw; height: 50vw; border-radius: 50%; background: radial-gradient(circle, rgba(220, 200, 235, 0.5) 0%, transparent 70%); filter: blur(80px); animation: ambientDrift 30s infinite ease-in-out; }
+      <div className="reveal-3" style={{ textAlign: 'center', maxWidth: '650px', lineHeight: '1.8', color: 'var(--ink)', fontSize: '1.1rem', margin: '0 auto 2rem' }}>
+        <p style={{ marginBottom: '1rem' }}>Hi, I am Sakshi - an acrylic artist from India.</p>
+        <p style={{ marginBottom: '1rem' }}>I create dreamy paintings inspired by sunsets, moonlit skies, oceans, nature, and quiet little moments.</p>
+        <p>I started painting as a way to turn the feelings I find in these moments into something tangible. Today, my art is all about creating peaceful little worlds that you can escape into for a while.</p>
+      </div>
 
-.container { max-width: 1150px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; width: 100%; }
-.section { padding-top: 4.5rem; padding-bottom: 4.5rem; position: relative; z-index: 1; } 
-.text-center { text-align: center; }
-.font-serif { font-family: var(--font-serif); font-weight: normal; }
-.font-hand { font-family: var(--font-hand); color: var(--sunset); font-size: 1.9rem; }
-.text-muted { color: var(--muted); }
-
-/* Hero */
-.hero { min-height: 95vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 0 2rem; z-index: 1; text-align: center; }
-.hero h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin: 0.5rem 0; }
-.hero-p { font-size: 1.15rem; max-width: 650px; margin: 1.5rem auto 2.5rem; font-weight: 300; line-height: 1.7; color: var(--ink); opacity: 0.85; }
-
-.reveal-1, .reveal-2, .reveal-3, .reveal-4 { opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.reveal-1 { animation-delay: 0.1s; } .reveal-2 { animation-delay: 0.3s; }
-.reveal-3 { animation-delay: 0.5s; } .reveal-4 { animation-delay: 0.7s; }
-
-/* Buttons */
-.btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-.btn { padding: 0.9rem 2.2rem; border-radius: 50px; border: 1px solid transparent; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: var(--transition-smooth); text-decoration: none; letter-spacing: 0.3px; }
-.btn-primary { background: var(--ink); color: var(--canvas); box-shadow: 0 10px 20px rgba(34,28,24,0.15); }
-.btn-primary:hover { background: #000; transform: translateY(-4px); box-shadow: 0 15px 30px rgba(34,28,24,0.25); }
-.btn-outline { background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-color: var(--glass-border); color: var(--ink); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-.btn-outline:hover { border-color: var(--sunset); color: var(--sunset-dark); transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08), inset 0 0 10px rgba(255,255,255,0.8); }
-
-/* Gallery Grid */
-.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; padding: 1rem 0; width: 100%; }
-.art-card {
-  padding: 1.2rem; border-radius: 14px; cursor: pointer; position: relative; transition: var(--transition-smooth);
-  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); text-align: left;
-}
-.art-card:hover { transform: translateY(-8px); z-index: 10; box-shadow: 0 30px 60px rgba(0,0,0,0.12), inset 0 0 25px rgba(255,255,255,0.9); }
-.art-card img { width: 100%; height: 270px; object-fit: cover; border-radius: 8px; transition: var(--transition-smooth); }
-.art-card:hover img { transform: scale(1.03); }
-.art-info { margin-top: 1.2rem; }
-
-/* Pagination */
-.pagination { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 3rem; flex-wrap: wrap; }
-.page-btn {
-  min-width: 42px; height: 42px; padding: 0 0.8rem; border-radius: 50px; border: 1px solid var(--glass-border);
-  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-  cursor: pointer; font-weight: 500; font-family: var(--font-sans); color: var(--ink);
-  transition: var(--transition-smooth); display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-}
-.page-btn:hover:not(:disabled) { border-color: var(--sunset); color: var(--sunset-dark); transform: translateY(-2px); }
-.page-btn.active { background: var(--ink); color: var(--canvas); border-color: var(--ink); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-.page-ellipsis { padding: 0 0.5rem; color: var(--muted); font-weight: bold; }
-
-/* Timeline */
-.timeline { display: flex; justify-content: space-between; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
-.time-step { flex: 1; min-width: 200px; padding: 1.8rem; border-radius: 16px; transition: var(--transition-smooth); background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); text-align: center; }
-.time-step:hover { transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.08), inset 0 0 25px rgba(255,255,255,0.8); }
-
-/* Mood Filters */
-.mood-filters { display: flex; justify-content: center; gap: 0.6rem; margin: 1.5rem 0 2.5rem; flex-wrap: wrap; }
-.mood-btn { padding: 0.6rem 1.4rem; border-radius: 50px; cursor: pointer; transition: var(--transition-smooth); font-weight: 500; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-.mood-btn:hover { border-color: var(--ink); }
-.mood-btn.active { background: var(--ink); color: var(--canvas); border-color: var(--ink); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
-
-/* Video Gallery */
-.vid-featured { position: relative; border-radius: 18px; overflow: hidden; height: 450px; margin-bottom: 2rem; cursor: pointer; transition: var(--transition-smooth); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
-.vid-featured img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition-smooth); }
-.play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75px; height: 75px; background: rgba(217, 136, 106, 0.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.7); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; transition: var(--transition-smooth); box-shadow: 0 10px 30px rgba(217, 136, 106, 0.4); }
-.vid-featured:hover { transform: translateY(-6px); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
-.vid-featured:hover img { transform: scale(1.04); }
-.vid-featured:hover .play-icon { transform: translate(-50%, -50%) scale(1.15); background: var(--sunset); }
-.vid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-
-/* Contact Section */
-.contact-box { padding: 4rem 2rem; border-radius: 24px; max-width: 800px; margin: 0 auto; transition: var(--transition-smooth); background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); text-align: center; }
-.contact-box:hover { box-shadow: 0 30px 60px rgba(0,0,0,0.08), inset 0 0 35px rgba(255,255,255,0.8); transform: translateY(-4px); }
-
-/* Modals */
-.modal-bg { position: fixed; inset: 0; background: rgba(30,25,23,0.7); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; animation: fadeIn 0.4s forwards; }
-.modal-content { width: 100%; max-width: 950px; border-radius: 20px; display: flex; overflow: hidden; position: relative; max-height: 90vh; opacity: 0; transform: scale(0.96) translateY(20px); animation: modalPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; background: rgba(250, 247, 242, 0.9); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 40px 80px rgba(0,0,0,0.3), inset 0 0 40px rgba(255,255,255,0.7); }
-.modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.9); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: var(--transition-smooth); }
-.modal-close:hover { transform: scale(1.1) rotate(90deg); background: #fff; }
-.modal-left { flex: 1; background: rgba(224, 217, 207, 0.5); }
-.modal-left img { width: 100%; height: 100%; object-fit: cover; }
-.modal-right { flex: 1.1; padding: 3.5rem; overflow-y: auto; display: flex; flex-direction: column; justify-content: center; }
-
-/* Sticky CTA */
-.sticky-cta { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; display: flex; align-items: center; gap: 1.2rem; background: rgba(255, 252, 248, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 0.8rem 1.5rem; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 20px 40px rgba(0,0,0,0.12), inset 0 0 20px rgba(255,255,255,0.8); transition: var(--transition-smooth); opacity: 0; animation: fadeUp 0.6s forwards; }
-.sticky-cta:hover { transform: translateY(-4px); box-shadow: 0 25px 50px rgba(0,0,0,0.2), inset 0 0 25px rgba(255,255,255,0.9); }
-
-footer.section { padding-left: 2rem !important; padding-right: 2rem !important; border-top: 1px solid rgba(34, 28, 24, 0.1); text-align: center; }
-
-/* Keyframes */
-@keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
-@keyframes ambientDrift { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(10vw, -10vh) scale(1.25); } }
-@keyframes modalPop { 0% { opacity: 0; transform: scale(0.96) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-
-/* Mobile Optimizations */
-@media (max-width: 900px) {
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .gallery-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-  .art-card { max-width: 360px; margin: 0 auto; width: 100%; }
-}
-
-@media (max-width: 768px) {
-  .container { padding-left: 1.5rem; padding-right: 1.5rem; } 
-  .section { padding-top: 3rem; padding-bottom: 3rem; } 
-  .hero { min-height: 85vh; padding-top: 2rem; padding-left: 1.5rem; padding-right: 1.5rem; }
-  .hero h1 { font-size: 2.8rem; }
-  .hero-p { font-size: 1.05rem; margin-bottom: 2rem; }
-  
-  .time-step { padding: 1.5rem; }
-  
-  .modal-content { flex-direction: column; overflow-y: auto; }
-  .modal-left { min-height: 350px; }
-  .modal-right { padding: 2rem; justify-content: flex-start; } 
-  
-  .vid-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .vid-featured { height: 220px; margin-bottom: 1rem; }
-  .contact-box { padding: 2.5rem 1.5rem; }
-  
-  footer.section { padding-bottom: 6rem !important; padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
-  
-  /* Safe Mobile Sticky CTA Layout (Centered with 1rem margin on both sides to completely stop clipping) */
-  .sticky-cta {
-    bottom: 1rem; right: auto; left: 1rem; right: 1rem;
-    width: auto; max-width: 400px; margin: 0 auto;
-    justify-content: space-between; padding: 0.7rem 1.2rem;
-  }
-  .sticky-cta:hover { transform: translateY(-4px); }
+      <div className="reveal-4 social-pills-row">
+        <button className="social-pill-icon" onClick={openIG} title="Instagram"><Instagram size={20} /></button>
+        <button className="social-pill-icon" onClick={openFB} title="Facebook"><Facebook size={20} /></button>
+        <button className="social-pill-icon" onClick={openYT} title="YouTube"><Youtube size={20} /></button>
+        <button className="social-pill-icon" onClick={openMail} title="Mail"><Mail size={20} /></button>
+      </div>
+    </header>
+  );
 }
 """)
 
-    print("\n✅ Success! Horizontal scrolling is now locked out, and the mobile sticky CTA is fully padded within screen bounds with its DM button intact.")
+    # ==========================================
+    # 2. UPDATE APP.JSX (Remove the Sticky CTA completely)
+    # ==========================================
+    create_file("client/src/App.jsx", """
+import React, { useState, useEffect } from 'react';
+import { Instagram, X } from 'lucide-react';
+import { trackEvent } from './analytics';
+import { INSTAGRAM_URL, FACEBOOK_URL, YOUTUBE_URL, EMAIL_ADDRESS } from './data';
+
+// Import Components
+import Hero from './components/Hero';
+import FeaturedImage from './components/FeaturedImage';
+import Reviews from './components/Reviews';
+import Gallery from './components/Gallery';
+import Timeline from './components/Timeline';
+import YouTubeSection from './components/YouTubeSection';
+import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
+
+export default function App() {
+  const [modalArt, setModalArt] = useState(null);
+  const [modalVideo, setModalVideo] = useState(null);
+
+  useEffect(() => {
+    trackEvent('page_view');
+  }, []);
+
+  // Shared Link Functions
+  const openIG = () => { trackEvent('instagram_click'); window.open(INSTAGRAM_URL, '_blank'); };
+  const openFB = () => { trackEvent('facebook_click'); window.open(FACEBOOK_URL, '_blank'); };
+  const openYT = () => { trackEvent('youtube_click'); window.open(YOUTUBE_URL, '_blank'); };
+  const openMail = () => { trackEvent('email_click'); window.location.href = `mailto:${EMAIL_ADDRESS}`; };
+
+  const smoothScrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 60; 
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const offsetPosition = (elementRect - bodyRect) - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div>
+      <div className="ambient-bg">
+        <div className="ambient-glow-1"></div>
+        <div className="ambient-glow-2"></div>
+        <div className="ambient-glow-3"></div>
+      </div>
+
+      <Hero 
+        openIG={openIG} openFB={openFB} openYT={openYT} openMail={openMail} 
+      />
+
+      <FeaturedImage />
+      <Reviews />
+      
+      <Gallery 
+        setModalArt={setModalArt} 
+        smoothScrollTo={smoothScrollTo} 
+      />
+
+      <Timeline />
+      
+      <YouTubeSection 
+        setModalVideo={setModalVideo} 
+      />
+      
+      <ContactSection 
+        openIG={openIG} openFB={openFB} openYT={openYT} openMail={openMail} 
+      />
+      
+      <Footer />
+
+      {/* --- MODALS --- */}
+      {modalArt && (
+        <div className="modal-bg" onClick={() => setModalArt(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setModalArt(null)}><X size={20} /></button>
+            <div className="modal-left"><img src={modalArt.img} alt={modalArt.title} /></div>
+            <div className="modal-right">
+              <span className="font-hand">{modalArt.mood}</span>
+              <h2 className="font-serif" style={{fontSize: '2.4rem', margin: '0.5rem 0'}}>{modalArt.title}</h2>
+              <p className="text-muted" style={{margin: '1rem 0 1.5rem', fontSize: '1.05rem'}}>{modalArt.size} • {modalArt.medium}</p>
+              <p style={{fontStyle: 'italic', marginBottom: '2.5rem', lineHeight: 1.7, fontSize: '1.1rem', color: 'var(--ink)'}}>"{modalArt.story}"</p>
+              <button className="btn btn-primary" style={{width: '100%', justifyContent: 'center', padding: '1rem'}} onClick={() => { trackEvent('painting_inquiry_click'); window.open(INSTAGRAM_URL); }}>
+                Enquire on Instagram <Instagram size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {modalVideo && (
+        <div className="modal-bg" onClick={() => setModalVideo(null)}>
+          <div className="modal-content" style={{background: '#000', height: '60vw', maxHeight: '650px', border: '1px solid rgba(255,255,255,0.2)'}}>
+            <button className="modal-close" onClick={() => setModalVideo(null)}><X size={20} /></button>
+            <iframe src={`https://www.youtube.com/embed/${modalVideo.youtubeId}?autoplay=1`} style={{width: '100%', height: '100%', border: 'none'}} allowFullScreen />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+""")
+
+    print("\n✅ Success! Both the Sticky CTA and the Explore button have been completely removed from your codebase.")
 
 if __name__ == "__main__":
     main()
