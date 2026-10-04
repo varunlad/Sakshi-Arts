@@ -142,3 +142,67 @@ img, video { -webkit-user-drag: none; user-drag: none; user-select: none; pointe
   .video-wrapper.inactive { opacity: 0; pointer-events: none; }
   .video-wrapper.active { opacity: 1; z-index: 2; }
 }
+
+/* ✨ HERO SOCIAL STATS STYLING */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.8rem;
+  margin: 0 auto 2rem;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--sunset-dark);
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 35px;
+  background: var(--border);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .hero-stats {
+    gap: 1.2rem;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.8rem;
+  }
+  .stat-value {
+    font-size: 1.3rem;
+  }
+  .stat-label {
+    font-size: 0.6rem;
+  }
+  .stat-divider {
+    height: 25px;
+  }
+}
