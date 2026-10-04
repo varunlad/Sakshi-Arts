@@ -4,7 +4,8 @@ import { Star } from 'lucide-react';
 export default function Reviews() {
   return (
     <section className="section container text-center" style={{ paddingTop: '1rem' }}>
-      <span className="font-hand">from my collectors</span>
+      {/* Updated text capitalization below */}
+      <span className="font-hand">From My Collectors</span>
       <h2 className="font-serif" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Kind Words</h2>
       
       <div className="reviews-container">

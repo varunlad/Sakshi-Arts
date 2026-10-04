@@ -14,7 +14,8 @@ export default function Hero({ openIG, openFB, openYT, openMail }) {
       </div>
 
       <h2 className="font-serif reveal-2" style={{ fontSize: '2.5rem', color: '#D9886A', marginBottom: '0.2rem' }}>Sakshi Lad Art</h2>
-      <span className="font-hand reveal-2" style={{ fontSize: '1.6rem', marginBottom: '1.5rem', display: 'block' }}>about the artist</span>
+      {/* Updated text capitalization below */}
+      <span className="font-hand reveal-2" style={{ fontSize: '1.6rem', marginBottom: '1.5rem', display: 'block' }}>About the Artist</span>
 
       <div className="reveal-3" style={{ textAlign: 'center', maxWidth: '650px', lineHeight: '1.8', color: 'var(--ink)', fontSize: '1.1rem', margin: '0 auto 2rem' }}>
         <p style={{ marginBottom: '1rem' }}>Hi, I am Sakshi - an acrylic artist from India.</p>
