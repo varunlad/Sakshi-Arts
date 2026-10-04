@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Instagram, X } from 'lucide-react';
+import { Instagram, Facebook, X } from 'lucide-react';
 import { trackEvent } from './analytics';
 import { INSTAGRAM_URL, FACEBOOK_URL, YOUTUBE_URL, EMAIL_ADDRESS } from './data';
 
@@ -16,17 +16,9 @@ export default function App() {
 
   useEffect(() => {
     trackEvent('page_view');
-
-    // Anti-Download Protection
-    const handleContextMenu = (e) => {
-      if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
-    };
-    const handleDragStart = (e) => {
-      if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
-    };
-    const handleKeyDown = (e) => {
-      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) e.preventDefault();
-    };
+    const handleContextMenu = (e) => { if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault(); };
+    const handleDragStart = (e) => { if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault(); };
+    const handleKeyDown = (e) => { if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) e.preventDefault(); };
 
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('dragstart', handleDragStart);
@@ -38,6 +30,20 @@ export default function App() {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    if (modalArt) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+    return () => { 
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [modalArt]);
 
   const openIG = () => { trackEvent('instagram_click'); window.open(INSTAGRAM_URL, '_blank'); };
   const openFB = () => { trackEvent('facebook_click'); window.open(FACEBOOK_URL, '_blank'); };
@@ -77,19 +83,77 @@ export default function App() {
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setModalArt(null)}><X size={20} /></button>
             
-            <div className="modal-left" onContextMenu={(e) => e.preventDefault()}>
+            <div className="modal-left" onContextMenu={(e) => e.preventDefault()} style={{ position: 'relative' }}>
+               <div style={{
+                position: 'absolute',
+                top: '1.2rem',
+                left: '1.2rem',
+                background: 'rgba(255, 255, 255, 0.85)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                padding: '6px 12px',
+                borderRadius: '20px',
+                fontSize: '0.75rem',
+                fontWeight: '700',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                color: 'var(--ink)',
+                zIndex: 2,
+                boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+              }}>
+                Handmade
+              </div>
               <img src={modalArt.img} alt={modalArt.title} draggable={false} />
             </div>
             
             <div className="modal-right">
-              {/* Force text to display with proper capitalization automatically */}
-              <span className="font-hand" style={{ textTransform: 'capitalize' }}>{modalArt.mood}</span>
-              <h2 className="font-serif" style={{fontSize: '2.4rem', margin: '0.5rem 0'}}>{modalArt.title}</h2>
-              <p className="text-muted" style={{margin: '1rem 0 1.5rem', fontSize: '1.05rem'}}>{modalArt.size} • {modalArt.medium}</p>
-              <p style={{fontStyle: 'italic', marginBottom: '2.5rem', lineHeight: 1.7, fontSize: '1.1rem', color: 'var(--ink)'}}>"{modalArt.story}"</p>
-              <button className="btn btn-primary" style={{width: '100%', justifyContent: 'center', padding: '1rem'}} onClick={() => { trackEvent('painting_inquiry_click'); window.open(INSTAGRAM_URL); }}>
-                Enquire on Instagram <Instagram size={18} />
-              </button>
+              
+              <div className="modal-right-content">
+                <h2 className="font-serif" style={{fontSize: '2.4rem', margin: '0 0 0.2rem 0', color: 'var(--ink)'}}>{modalArt.title}</h2>
+                
+                {/* ✨ UPDATED: Green Price, but 'only' is styled in black */}
+                <p className="font-serif" style={{ fontSize: '1.4rem', color: '#2E7D32', fontWeight: 'bold', marginBottom: '1.2rem' }}>
+                  {modalArt.price ? <>{modalArt.price} <span style={{ color: 'var(--ink)' }}>only</span></> : 'DM for Price'}
+                </p>
+                
+                {modalArt.availability !== 'Sold Out' && (
+                  <div style={{ 
+                    background: '#FDECE8', 
+                    color: 'var(--sunset-dark)', 
+                    padding: '0.6rem 1rem', 
+                    borderRadius: '8px', 
+                    fontSize: '0.9rem', 
+                    marginBottom: '1.2rem', 
+                    fontWeight: '500',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    ✨ Flat 10% off on prepaid orders
+                  </div>
+                )}
+                
+                <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', fontSize: '0.95rem', color: 'var(--muted)', flexWrap: 'wrap' }}>
+                  <span><strong>Size:</strong> {modalArt.size}</span>
+                  <span>•</span>
+                  <span><strong>Status:</strong> <span style={{ color: modalArt.availability === 'Sold Out' ? 'var(--muted)' : '#2E7D32', fontWeight: 'bold' }}>{modalArt.availability}</span></span>
+                </div>
+                
+                <p style={{fontStyle: 'italic', margin: 0, lineHeight: 1.7, fontSize: '1.1rem', color: 'var(--ink)'}}>"{modalArt.story}"</p>
+              </div>
+              
+              <div className="modal-right-footer">
+                <div style={{ display: 'flex', gap: '0.8rem', width: '100%' }}>
+                  {/* ✨ UPDATED: Dynamically changes "DM to Buy" -> "DM to request" if Sold Out */}
+                  <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem'}} onClick={() => { trackEvent('buy_ig'); window.open(INSTAGRAM_URL); }}>
+                    <Instagram size={18} /> {modalArt.availability === 'Sold Out' ? 'DM to request' : 'DM to Buy'}
+                  </button>
+                  <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem', background: '#3b5998', borderColor: '#3b5998'}} onClick={() => { trackEvent('buy_fb'); window.open(FACEBOOK_URL); }}>
+                    <Facebook size={18} /> {modalArt.availability === 'Sold Out' ? 'DM to request' : 'DM to Buy'}
+                  </button>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

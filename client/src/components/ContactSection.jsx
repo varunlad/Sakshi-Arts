@@ -5,8 +5,10 @@ export default function ContactSection({ openIG, openFB, openYT, openMail }) {
   return (
     <section className="section container text-center">
       <div className="contact-box">
-        <span className="font-hand">Connect & Collect</span>
-        <h2 className="font-serif" style={{fontSize: '2.8rem', margin: '0.5rem 0 1.2rem'}}>Commissions & Collaborations</h2>
+        <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '1.5rem'}}>
+          Art Commissions & Collaborations
+        </h2>
+        
         <p className="text-muted" style={{maxWidth: '550px', margin: '0 auto 2.5rem', lineHeight: '1.7', fontSize: '1.05rem'}}>
           Every painting tells a story. If you're interested in an available piece, want to commission a custom canvas, or discuss a collaboration, I would absolutely love to hear from you.
         </p>

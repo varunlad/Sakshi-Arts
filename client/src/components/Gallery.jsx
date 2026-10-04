@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { paintings } from '../data';
+import { paintings } from '../GalleryData';
 import { trackEvent } from '../analytics';
 
 export default function Gallery({ setModalArt, smoothScrollTo }) {
-  const [mood, setMood] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 6; 
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [mood]);
+    const handleResize = () => {
+      setItemsPerPage(window.innerWidth > 768 ? 6 : 4);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const filteredPaintings = paintings.filter(p => mood === 'all' || p.mood === mood);
-  const totalPages = Math.ceil(filteredPaintings.length / ITEMS_PER_PAGE);
-  const paginatedPaintings = filteredPaintings.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(paintings.length / itemsPerPage);
+  
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
+  const paginatedPaintings = paintings.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const getPageNumbers = () => {
     const pages = [];
@@ -33,25 +43,37 @@ export default function Gallery({ setModalArt, smoothScrollTo }) {
 
   return (
     <section id="gallery" className="section container text-center">
-      <span className="font-hand">Stories in Colour</span>
-      <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '1rem'}}>Moments on Canvas</h2>
-      
-      <div className="mood-filters">
-        {['all', 'sunset', 'ocean', 'moonlight', 'nature'].map(m => (
-          <button key={m} className={`mood-btn ${mood === m ? 'active' : ''}`} onClick={() => { setMood(m); trackEvent('mood_filter_click', { meta: { mood: m } }); }}>
-            {m.charAt(0).toUpperCase() + m.slice(1)}
-          </button>
-        ))}
-      </div>
+      <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '2rem'}}>
+        Canvas Gallery
+      </h2>
 
       <div className="gallery-grid">
         {paginatedPaintings.map((p) => (
           <div key={p.id} className="art-card" onClick={() => { setModalArt(p); trackEvent('painting_view', { paintingId: p.id }); }}>
-            <img src={p.img} alt={p.title} loading="lazy" />
+            
+            <div className="handmade-tag-overlay">
+              Handmade
+            </div>
+
+            <img src={p.img} alt={p.title} loading="lazy" draggable={false} onContextMenu={(e) => e.preventDefault()} />
+            
             <div className="art-info">
-              <span className="font-mono text-muted" style={{fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px'}}>{p.mood} Collection</span>
-              <h3 className="font-serif" style={{fontSize: '1.4rem', margin: '6px 0'}}>{p.title}</h3>
-              <p className="text-muted" style={{fontSize: '0.9rem'}}>{p.size} • {p.availability}</p>
+              <h3 className="font-serif">{p.title}</h3>
+              
+              <div className="price-row">
+                <p className="font-serif price-text">
+                  {/* ✨ Added 'price-only-text' class here to target it on mobile */}
+                  {p.price ? <>{p.price} <span className="price-only-text" style={{ color: 'var(--ink)' }}>only</span></> : 'DM for Price'}
+                </p>
+                
+                <span className="availability-badge" style={{ 
+                  background: p.availability === 'Sold Out' ? '#EAE5DF' : '#E8F5E9',
+                  color: p.availability === 'Sold Out' ? 'var(--muted)' : '#2E7D32'
+                }}>
+                  {p.availability}
+                </span>
+              </div>
+
             </div>
           </div>
         ))}

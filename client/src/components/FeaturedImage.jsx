@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import FeaturedImageReview from '../assets/Images/Review_Img.jpg';
+
+// Fixed the filenames to match what is actually in your assets folder!
+import Img_Sunset from '../assets/Images/94134.jpg';
+import Img_Nature from '../assets/Images/94264.jpg';
+import Img_Night_Beach from '../assets/Images/82673.png';
 
 export default function FeaturedImage() {
-  // Add your images to this array. 
-  // I added placeholders alongside your local image so you can see the transition working!
   const images = [
-    FeaturedImageReview,
-    "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1200&q=80",
-    "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1200&q=80"
+    Img_Sunset,
+    Img_Nature,
+    Img_Night_Beach
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Change the image every 2.5 seconds (2500 milliseconds)
   useEffect(() => {
-    if (images.length <= 1) return; // No need to slide if there's only 1 image
+    if (images.length <= 1) return; 
     
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -50,7 +51,7 @@ export default function FeaturedImage() {
               height: '100%',
               objectFit: 'cover',
               opacity: index === currentIndex ? 1 : 0,
-              transition: 'opacity 0.8s ease-in-out', /* Smooth premium fade */
+              transition: 'opacity 0.8s ease-in-out', 
               zIndex: index === currentIndex ? 2 : 1
             }}
           />

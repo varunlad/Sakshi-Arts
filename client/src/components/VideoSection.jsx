@@ -31,9 +31,10 @@ export default function VideoSection() {
 
   return (
     <section className="section container text-center">
-      <span className="font-hand" style={{ marginBottom: '1.5rem', display: 'block', fontSize: '2rem' }}>
-        Watch the Art Come to Life
-      </span>
+      {/* Updated Heading exactly as requested */}
+      <h2 className="font-serif" style={{ fontSize: '2.5rem', marginBottom: '2.5rem' }}>
+        Art Process Videos
+      </h2>
       
       <div className="video-container">
         {playlist.map((src, index) => (
@@ -49,11 +50,10 @@ export default function VideoSection() {
               playsInline
               preload="auto"
               onEnded={() => handleEnded(index)}
-              // 🔒 VIDEO PROTECTION ATTRIBUTES
-              controlsList="nodownload noplaybackrate" // Hides the native download button
-              disablePictureInPicture // Disables downloading via PiP context menu
-              onContextMenu={(e) => e.preventDefault()} // Disables right-click menu entirely
-              draggable={false} // Disables drag saving
+              controlsList="nodownload noplaybackrate" 
+              disablePictureInPicture 
+              onContextMenu={(e) => e.preventDefault()} 
+              draggable={false} 
             >
               <source src={src} type="video/mp4" />
               Your browser does not support the video tag.
