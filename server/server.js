@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const Analytics = require('./models/Analytics');
@@ -10,7 +11,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✨ UPDATED: Now checks for both MONGODB_URI (your .env) and MONGO_URI
 const DB_URI = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/art_portfolio';
 
 mongoose.connect(DB_URI)
@@ -35,7 +35,7 @@ app.post('/api/analytics', async (req, res) => {
 });
 
 // =====================================
-// ROUTE 2: Capture Personal Leads/Inquiries
+// ROUTE 2: Capture Personal Leads/Inquiries + Email Alert
 // =====================================
 app.post('/api/contact', async (req, res) => {
   try {
@@ -45,11 +45,40 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'All fields are required.' });
     }
 
+    // 1. Save to Database
     const newLead = new Lead({ name, email, message });
     await newLead.save();
 
-    res.status(200).json({ success: true, message: 'Lead captured successfully' });
+    // 2. Send Email Notification to the Artist
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        }
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER, // Sends the alert to your own inbox
+        replyTo: email,             // Clicking 'reply' replies to the client
+        subject: `🎨 New Art Commission Request from ${name}`,
+        text: `You have a new message from your portfolio website!
+
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}`
+      };
+
+      await transporter.sendMail(mailOptions);
+    }
+
+    res.status(200).json({ success: true, message: 'Lead captured and email sent successfully' });
   } catch (error) {
+    console.error('Submission Error:', error);
     res.status(500).json({ error: 'Failed to submit form' });
   }
 });
