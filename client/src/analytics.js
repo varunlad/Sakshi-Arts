@@ -1,7 +1,7 @@
 export const trackEvent = async (eventName, eventData = {}) => {
   try {
     // ✨ UPDATED: Using explicit IP 127.0.0.1 instead of localhost
-    await fetch('http://127.0.0.1:5001/api/analytics', {
+    await fetch('https://sakshi-arts-backend.onrender.com/api/analytics', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
