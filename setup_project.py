@@ -11,136 +11,89 @@ def create_file(path, content):
 
 def main():
     print("=" * 60)
-    print("✨ Adding new paintings to GalleryData.js...")
+    print("✨ Updating ContactSection text to be more professional...")
     print("=" * 60)
 
     # ==========================================
-    # UPDATE GALLERYDATA.JS
+    # UPDATE CONTACTSECTION.JSX
     # ==========================================
-    create_file("client/src/GalleryData.js", """
-import Moon from "./assets/Images/Moon.jpeg";
-import Tides from "./assets/Images/Tides.jpeg";
-import Stillness from "./assets/Images/94134.jpg";
-import Ocean from "./assets/Images/Ocean.jpeg";
-import Echoes_of_Ocean from "./assets/Images/Echoes_of_Ocean.jpeg";
-import Loves_Waves from "./assets/Images/94264.jpg";
-import Latic_Afterglow from "./assets/Images/Latic_Afterglow.jpeg";
+    create_file("client/src/components/ContactSection.jsx", """
+import React, { useState } from 'react';
+import { Instagram, Facebook, Youtube, Mail } from 'lucide-react';
 
-export const paintings = [
-  {
-    id: 1,
-    img: Tides,
-    title: "Tides of a daydream",
-    price: "₹900",
-    size: "4 × 4 in (10.2 × 10.2 cm)",
-    availability: "Available",
-    story:
-      "Tides of a daydream captures a dreamy pink and violet sunset drifting across a tranquil ocean, with soft clouds, glowing light, and gentle waves creating a peaceful little escape. A tiny original artwork made to bring a touch of dreamy serenity to your space. Includes the white frame shown. Signed on the back. 💜🌊\\n\\n• Original acrylic painting on canvas\\n• Framed: Includes the white frame shown\\n• Sealed with a protective varnish\\n• Carefully packaged for shipping",
-  },
-  {
-    id: 2,
-    img: Moon,
-    title: "Moon's magic",
-    price: "₹1,530",
-    size: "6 in diameter (15.2 cm)",
-    availability: "Available",
-    story:
-      "Moon's magic captures the intricate detail and timeless wonder of the lunar surface, blending stark monochromatic textures with bright, radiant ray craters. A detailed original artwork crafted to bring a touch of celestial wonder and quiet enchantment to your space. Signed on the back. 🌙✨\\n\\n• Original acrylic painting on round stretched canvas\\n• Sealed with a protective varnish\\n• Carefully packaged for shipping",
-  },
-  {
-    id: 3,
-    img: Stillness,
-    title: "Stillness beyond the pines",
-    price: "₹3,400",
-    size: "10-inch oval canvas board",
-    availability: "Available",
-    story:
-      "A dreamy hand-painted scene inspired by the gentle beauty of nature. A delicate feather drifts across a soft pastel sky, floating above a peaceful forest of pine trees. The blend of pink, blue, and lavender creates a calm, dreamy atmosphere, capturing the feeling of freedom and going wherever the wind takes you.\\n\\n• Original hand-painted artwork\\n• Medium: Acrylic on canvas\\n• Finish: Gloss varnished for added protection",
-  },
-  {
-    id: 4,
-    img: Ocean,
-    title: "Ocean serenity",
-    price: "₹3,200",
-    size: "8 inches (Circle)",
-    availability: "Available",
-    story:
-      "A handmade ocean-inspired painting capturing the movement and depth of waves in shades of deep blue, turquoise and white. The textured brushwork gives the waves a dynamic, flowing feel.\\n\\n• Medium: Acrylic on canvas\\n• Theme: Ocean / Seascape\\n• Textured brushwork and layered details\\n• Carefully packed for shipping",
-  },
-  {
-    id: 5,
-    img: Echoes_of_Ocean,
-    title: "Echoes of the endless ocean",
-    price: "₹8,400",
-    size: "32 cm × 22.5 cm (12.5 in × 8.8 in)",
-    availability: "Available",
-    story:
-      "Bring the serene, hypnotic rhythm of the deep sea into your home with Echoes of the Endless Ocean. Painted with rich, layered acrylics, this piece captures the continuous movement of calm ocean waves under a vibrant blue sky—a perfect statement artwork to bring tranquil energy to any desk, shelf, or wall space.\\n\\n• Medium: Acrylic on canvas (framed)\\n• Style: Contemporary Seascapes / Realism\\n• Includes: 1 x Original hand-painted canvas in a dark wooden frame with gold trim.",
-  },
-  {
-    id: 6,
-    img: Loves_Waves,
-    title: "Love beyond the waves",
-    price: "₹2,300",
-    size: "15.2 cm × 15.2 cm (6 in × 6 in)",
-    availability: "Available",
-    story:
-      "Bring a touch of charm and color into your home with this hand-painted heart piece. Painted with rich, layered acrylics, this artwork captures vibrant textures and peaceful energy—a perfect statement accent to elevate any desk, shelf, or wall space.\\n\\n• Medium: Acrylic on canvas board\\n• Style: Contemporary Fine Art\\n• Finish: Gloss varnished for protection",
-  },
-  {
-    id: 7,
-    img: Latic_Afterglow,
-    title: "Lilac afterglow",
-    price: "₹2,799",
-    size: "8 in diameter (20.3 cm)",
-    availability: "Available",
-    story:
-      "Lilac afterglow captures a dreamy sunset painted in rich shades of lilac, deep purple, and fiery orange gradient lights above rolling ocean waves. Soft clouds and gentle, foamy surf meet vibrant horizon tones to bring a serene and magical escape directly into your space. Signed on the back. 💜🌅\\n\\n• Original acrylic painting on round canvas\\n• Sealed with a protective varnish\\n• Carefully packaged for shipping",
-  },
-  {
-    id: 8,
-    img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80", // Replace with your image import when ready
-    title: "Moonlit clouds",
-    price: "₹1,890",
-    size: "6 in diameter (15.2 cm)",
-    availability: "Available",
-    story:
-      "Moonlit clouds brings to life a glowing crescent moon nestled over deep blue, velvety clouds scattered with twinkling stars. Filled with soft textures and night sky magic, this piece adds a calming touch of wonder to any cozy corner. Signed on the back. 🌙☁️✨\\n\\n• Original acrylic painting on round canvas\\n• Sealed with a protective varnish\\n• Carefully packaged for shipping",
-  },
-  {
-    id: 9,
-    img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80", // Replace with your image import when ready
-    title: "Twilight in a heartbeat",
-    price: "₹4,789",
-    size: "8 in (20.3 cm)",
-    availability: "Available",
-    story:
-      "Twilight in a heartbeat paints a breathtaking dusk horizon across a heart-shaped view, where vivid fiery orange and deep magenta fade into soft twilight purples and starry blue skies. A delicate crescent moon glows over smooth, reflective ocean waves to bring a romantic touch of evening tranquility into your home. Signed on the back. 💖🌙🌊\\n\\n• Original acrylic painting on heart-shaped stretched canvas\\n• Sealed with a protective varnish\\n• Carefully packaged for shipping",
-  },
-  {
-    id: 10,
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80", // Replace with your image import when ready
-    title: "Dreaming tides",
-    price: "₹1,169",
-    size: "6 × 6 in (15.2 × 15.2 cm)",
-    availability: "Available",
-    story:
-      "Dreaming tides showcases a full golden moon suspended over tranquil blue ocean waters, casting a soft shimmering reflection along gentle waves. Smooth color gradients and delicate foamy shorelines come together to create a soothing, peaceful escape for your space. Signed on the back. 🌕🌊✨\\n\\n• Original acrylic painting on canvas\\n• Sealed with a protective varnish\\n• Carefully packaged for shipping",
-  },
-  {
-    id: 11,
-    img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80", // Replace with your image import when ready
-    title: "Moonlit dancing across violet waves",
-    price: "₹1,150",
-    size: "6 × 6 in (15.2 × 15.2 cm)",
-    availability: "Available",
-    story:
-      "Moonlit dancing across violet waves presents a full, luminescent moon casting a brilliant path of light across sculpted violet ocean waves. Velvety purple gradients and sparkling reflections create a serene, enchanting nightscape designed to bring a touch of magical calm to your space. Signed on the back. 💜🌕🌊\\n\\n• Original acrylic painting on canvas\\n• Sealed with a protective varnish\\n• Carefully packaged for shipping",
-  }
-];
+export default function ContactSection({ openIG, openFB, openYT, openMail }) {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('Sending...');
+    
+    try {
+      const response = await fetch('http://127.0.0.1:5001/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        setStatus('Message sent successfully! I will get back to you soon.');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus('An error occurred. Please try reaching out via social media.');
+    }
+  };
+
+  return (
+    <section className="section container text-center">
+      <div className="contact-box" style={{ maxWidth: '650px' }}>
+        <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '1rem'}}>
+          Commissions
+        </h2>
+        
+        <p className="text-muted" style={{maxWidth: '550px', margin: '0 auto 2rem', lineHeight: '1.7', fontSize: '1.05rem'}}>
+          Every painting tells a story. If you're interested in an available piece, want to commission a custom canvas, or discuss a collaboration, I would absolutely love to hear from you.
+        </p>
+        
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem', textAlign: 'left' }}>
+          <div>
+            <label style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--muted)', display: 'block', marginBottom: '0.4rem' }}>Name</label>
+            <input type="text" className="form-input" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your Name" />
+          </div>
+          <div>
+            <label style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--muted)', display: 'block', marginBottom: '0.4rem' }}>Email</label>
+            <input type="email" className="form-input" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="your.email@example.com" />
+          </div>
+          <div>
+            <label style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--muted)', display: 'block', marginBottom: '0.4rem' }}>Message</label>
+            <textarea className="form-input" rows="4" required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} placeholder="Tell me about what you're looking for..."></textarea>
+          </div>
+          <button type="submit" className="btn btn-primary" style={{ padding: '0.8rem', fontSize: '1rem', marginTop: '0.5rem' }}>Send Message</button>
+          
+          {status && <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.95rem', color: status.includes('success') ? '#2E7D32' : '#D9886A' }}>{status}</p>}
+        </form>
+
+        <div className="stat-divider" style={{ width: '100%', height: '1px', margin: '0 auto 2rem' }}></div>
+
+        {/* ✨ UPDATED TEXT HERE */}
+        <p className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '1rem', fontWeight: '500' }}>Connect across platforms:</p>
+        <div className="social-pills-row" style={{ justifyContent: 'center' }}>
+          <button className="social-pill-icon" onClick={openIG} title="Instagram"><Instagram size={20} /></button>
+          <button className="social-pill-icon" onClick={openFB} title="Facebook"><Facebook size={20} /></button>
+          <button className="social-pill-icon" onClick={openYT} title="YouTube"><Youtube size={20} /></button>
+          <button className="social-pill-icon" onClick={openMail} title="Mail"><Mail size={20} /></button>
+        </div>
+      </div>
+    </section>
+  );
+}
 """)
 
-    print("\n✅ Success! GalleryData.js has been successfully updated with all 11 paintings.")
+    print("\n✅ Success! The contact prompt text has been updated to sound more professional.")
 
 if __name__ == "__main__":
     main()

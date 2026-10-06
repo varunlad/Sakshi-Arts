@@ -206,3 +206,25 @@ img, video { -webkit-user-drag: none; user-drag: none; user-select: none; pointe
     height: 25px;
   }
 }
+
+/* ✨ FORM STYLING */
+.form-input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  transition: var(--transition-smooth);
+}
+.form-input:focus {
+  border-color: var(--sunset);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(217, 136, 106, 0.15);
+}
+textarea.form-input {
+  resize: vertical;
+}

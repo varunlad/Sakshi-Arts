@@ -84,7 +84,6 @@ export default function App() {
             <button className="modal-close" onClick={() => setModalArt(null)}><X size={20} /></button>
             
             <div className="modal-left" onContextMenu={(e) => e.preventDefault()} style={{ position: 'relative' }}>
-              {/* Handmade tag completely removed */}
               <img src={modalArt.img} alt={modalArt.title} draggable={false} />
             </div>
             
@@ -116,22 +115,22 @@ export default function App() {
                 
                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', fontSize: '0.95rem', color: 'var(--muted)', flexWrap: 'wrap' }}>
                   <span><strong>Size:</strong> {modalArt.size}</span>
-                  <span>•</span>
+                  <span>.</span>
                   <span><strong>Status:</strong> <span style={{ color: modalArt.availability === 'Sold Out' ? 'var(--muted)' : '#2E7D32', fontWeight: 'bold' }}>{modalArt.availability}</span></span>
                 </div>
                 
-                {/* ✨ Formatted description with white-space pre-line so each line/bullet is on a separate line */}
                 <p style={{fontStyle: 'italic', margin: 0, lineHeight: 1.7, fontSize: '1.05rem', color: 'var(--ink)', whiteSpace: 'pre-line'}}>
-                  "{modalArt.story}"
+                  {modalArt.story}
                 </p>
               </div>
               
               <div className="modal-right-footer">
                 <div style={{ display: 'flex', gap: '0.8rem', width: '100%' }}>
-                  <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem'}} onClick={() => { trackEvent('buy_ig'); window.open(INSTAGRAM_URL); }}>
+                  {/* ✨ UPDATED: Now passes the specific painting title to your analytics when they click to buy */}
+                  <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem'}} onClick={() => { trackEvent('buy_ig', { paintingTitle: modalArt.title }); window.open(INSTAGRAM_URL); }}>
                     <Instagram size={18} /> {modalArt.availability === 'Sold Out' ? 'Request' : 'DM to Buy'}
                   </button>
-                  <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem', background: '#3b5998', borderColor: '#3b5998'}} onClick={() => { trackEvent('buy_fb'); window.open(FACEBOOK_URL); }}>
+                  <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem', background: '#3b5998', borderColor: '#3b5998'}} onClick={() => { trackEvent('buy_fb', { paintingTitle: modalArt.title }); window.open(FACEBOOK_URL); }}>
                     <Facebook size={18} /> {modalArt.availability === 'Sold Out' ? 'Request' : 'DM to Buy'}
                   </button>
                 </div>

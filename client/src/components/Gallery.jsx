@@ -49,10 +49,8 @@ export default function Gallery({ setModalArt, smoothScrollTo }) {
 
       <div className="gallery-grid">
         {paginatedPaintings.map((p) => (
-          <div key={p.id} className="art-card" onClick={() => { setModalArt(p); trackEvent('painting_view', { paintingId: p.id }); }}>
+          <div key={p.id} className="art-card" onClick={() => { setModalArt(p); trackEvent('painting_view', { paintingTitle: p.title }); }}>
             
-            {/* Handmade tag completely removed */}
-
             <img src={p.img} alt={p.title} loading="lazy" draggable={false} onContextMenu={(e) => e.preventDefault()} />
             
             <div className="art-info">
