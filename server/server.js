@@ -4,6 +4,10 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+// ✨ CRITICAL FIX: Force Node.js to prioritize IPv4. 
+// This prevents the 'ENETUNREACH' IPv6 error on Render.
+require('dns').setDefaultResultOrder('ipv4first');
+
 const Analytics = require('./models/Analytics');
 const Lead = require('./models/Lead');
 
@@ -51,8 +55,12 @@ app.post('/api/contact', async (req, res) => {
 
     // 2. Send Email Notification to the Artist
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      
+      // ✨ CRITICAL FIX: Using explicit host and port for better production reliability
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS
@@ -64,13 +72,7 @@ app.post('/api/contact', async (req, res) => {
         to: process.env.EMAIL_USER, // Sends the alert to your own inbox
         replyTo: email,             // Clicking 'reply' replies to the client
         subject: `🎨 New Art Commission Request from ${name}`,
-        text: `You have a new message from your portfolio website!
-
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}`
+        text: `You have a new message from your portfolio website!\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
       };
 
       await transporter.sendMail(mailOptions);
