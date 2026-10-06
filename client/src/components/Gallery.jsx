@@ -44,16 +44,14 @@ export default function Gallery({ setModalArt, smoothScrollTo }) {
   return (
     <section id="gallery" className="section container text-center">
       <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '2rem'}}>
-        Canvas Gallery
+        Original Paintings
       </h2>
 
       <div className="gallery-grid">
         {paginatedPaintings.map((p) => (
           <div key={p.id} className="art-card" onClick={() => { setModalArt(p); trackEvent('painting_view', { paintingId: p.id }); }}>
             
-            <div className="handmade-tag-overlay">
-              Handmade
-            </div>
+            {/* Handmade tag completely removed */}
 
             <img src={p.img} alt={p.title} loading="lazy" draggable={false} onContextMenu={(e) => e.preventDefault()} />
             
@@ -62,7 +60,6 @@ export default function Gallery({ setModalArt, smoothScrollTo }) {
               
               <div className="price-row">
                 <p className="font-serif price-text">
-                  {/* ✨ Added 'price-only-text' class here to target it on mobile */}
                   {p.price ? <>{p.price} <span className="price-only-text" style={{ color: 'var(--ink)' }}>only</span></> : 'DM for Price'}
                 </p>
                 

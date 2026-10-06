@@ -84,25 +84,7 @@ export default function App() {
             <button className="modal-close" onClick={() => setModalArt(null)}><X size={20} /></button>
             
             <div className="modal-left" onContextMenu={(e) => e.preventDefault()} style={{ position: 'relative' }}>
-               <div style={{
-                position: 'absolute',
-                top: '1.2rem',
-                left: '1.2rem',
-                background: 'rgba(255, 255, 255, 0.85)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                padding: '6px 12px',
-                borderRadius: '20px',
-                fontSize: '0.75rem',
-                fontWeight: '700',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                color: 'var(--ink)',
-                zIndex: 2,
-                boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
-              }}>
-                Handmade
-              </div>
+              {/* Handmade tag completely removed */}
               <img src={modalArt.img} alt={modalArt.title} draggable={false} />
             </div>
             
@@ -111,9 +93,8 @@ export default function App() {
               <div className="modal-right-content">
                 <h2 className="font-serif" style={{fontSize: '2.4rem', margin: '0 0 0.2rem 0', color: 'var(--ink)'}}>{modalArt.title}</h2>
                 
-                {/* ✨ UPDATED: Green Price, but 'only' is styled in black */}
                 <p className="font-serif" style={{ fontSize: '1.4rem', color: '#2E7D32', fontWeight: 'bold', marginBottom: '1.2rem' }}>
-                  {modalArt.price ? <>{modalArt.price} <span style={{ color: 'var(--ink)' }}>only</span></> : 'DM for Price'}
+                  {modalArt.price ? <>{modalArt.price} <span className="price-only-text" style={{ color: 'var(--ink)' }}>only</span></> : 'DM for Price'}
                 </p>
                 
                 {modalArt.availability !== 'Sold Out' && (
@@ -139,17 +120,19 @@ export default function App() {
                   <span><strong>Status:</strong> <span style={{ color: modalArt.availability === 'Sold Out' ? 'var(--muted)' : '#2E7D32', fontWeight: 'bold' }}>{modalArt.availability}</span></span>
                 </div>
                 
-                <p style={{fontStyle: 'italic', margin: 0, lineHeight: 1.7, fontSize: '1.1rem', color: 'var(--ink)'}}>"{modalArt.story}"</p>
+                {/* ✨ Formatted description with white-space pre-line so each line/bullet is on a separate line */}
+                <p style={{fontStyle: 'italic', margin: 0, lineHeight: 1.7, fontSize: '1.05rem', color: 'var(--ink)', whiteSpace: 'pre-line'}}>
+                  "{modalArt.story}"
+                </p>
               </div>
               
               <div className="modal-right-footer">
                 <div style={{ display: 'flex', gap: '0.8rem', width: '100%' }}>
-                  {/* ✨ UPDATED: Dynamically changes "DM to Buy" -> "DM to request" if Sold Out */}
                   <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem'}} onClick={() => { trackEvent('buy_ig'); window.open(INSTAGRAM_URL); }}>
-                    <Instagram size={18} /> {modalArt.availability === 'Sold Out' ? 'DM to request' : 'DM to Buy'}
+                    <Instagram size={18} /> {modalArt.availability === 'Sold Out' ? 'Request' : 'DM to Buy'}
                   </button>
                   <button className="btn btn-primary" style={{flex: 1, padding: '0.9rem 0.5rem', gap: '8px', fontSize: '0.95rem', background: '#3b5998', borderColor: '#3b5998'}} onClick={() => { trackEvent('buy_fb'); window.open(FACEBOOK_URL); }}>
-                    <Facebook size={18} /> {modalArt.availability === 'Sold Out' ? 'DM to request' : 'DM to Buy'}
+                    <Facebook size={18} /> {modalArt.availability === 'Sold Out' ? 'Request' : 'DM to Buy'}
                   </button>
                 </div>
               </div>

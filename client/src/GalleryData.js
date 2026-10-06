@@ -1,62 +1,123 @@
-// ==========================================
-// 🎨 YOUR PAINTING INVENTORY
-// ==========================================
-// To use your local images, uncomment the imports below and match the filenames in your assets folder!
-import wale_sea from './assets/Images/66738.jpg';
-
+import Moon from "./assets/Images/Moon.jpeg";
+import Tides from "./assets/Images/Tides.jpeg";
+import Stillness from "./assets/Images/94134.jpg";
+import Ocean from "./assets/Images/Ocean.jpeg";
+import Echoes_of_Ocean from "./assets/Images/Echoes_of_Ocean.jpeg";
+import Loves_Waves from "./assets/Images/94264.jpg";
+import Latic_Afterglow from "./assets/Images/Latic_Afterglow.jpeg";
+import Moonlit from "./assets/Images/Moonlit.jpeg";
+import Twilight from "./assets/Images/Twilight.jpeg";
+import Dreaming_tides from "./assets/Images/82673.png";
+import Moonlit_clouds from "./assets/Images/Moonlit_clouds.jpeg";
 export const paintings = [
   {
     id: 1,
-    img: wale_sea,
-    title: "Ocean Breeze",
-    price: "₹4,500",
-    size: "12x16 inches",
+    img: Tides,
+    title: "Tides of a daydream",
+    price: "₹900",
+    size: "4 × 4 in (10.2 × 10.2 cm)",
     availability: "Available",
-    story: "Inspired by the quiet calm of the ocean waves right before the sun fully sets. I wanted to capture the contrast between the cool water and the warm sky."
+    story:
+      "Tides of a daydream captures a dreamy pink and violet sunset drifting across a tranquil ocean, with soft clouds, glowing light, and gentle waves creating a peaceful little escape. A tiny original artwork made to bring a touch of dreamy serenity to your space. Includes the white frame shown. Signed on the back. 💜🌊\n\n• Original acrylic painting on canvas\n• Framed: Includes the white frame shown\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
   },
   {
     id: 2,
-    img: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80", 
-    title: "Midnight Moon",
-    price: "₹3,200",
-    size: "10x10 inches",
-    availability: "Sold Out",
-    story: "A dreamy depiction of a glowing full moon reflecting on a still lake. This piece uses heavy texture to bring the clouds to life."
+    img: Moon,
+    title: "Moon's magic",
+    price: "₹1,530",
+    size: "6 in diameter (15.2 cm)",
+    availability: "Available",
+    story:
+      "Moon's magic captures the intricate detail and timeless wonder of the lunar surface, blending stark monochromatic textures with bright, radiant ray craters. A detailed original artwork crafted to bring a touch of celestial wonder and quiet enchantment to your space. Signed on the back. 🌙✨\n\n• Original acrylic painting on round stretched canvas\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
   },
   {
     id: 3,
-    img: "https://images.unsplash.com/photo-1549490349-8643362247b5?w=800&q=80", 
-    title: "Golden Hour Waves",
-    price: "₹5,000",
-    size: "16x20 inches",
+    img: Stillness,
+    title: "Stillness beyond the pines",
+    price: "₹3,400",
+    size: "10-inch oval canvas board",
     availability: "Available",
-    story: "The golden hour is my favorite time to paint. The way the light hits the crest of the waves creates such a peaceful, warm energy."
+    story:
+      "A dreamy hand-painted scene inspired by the gentle beauty of nature. A delicate feather drifts across a soft pastel sky, floating above a peaceful forest of pine trees. The blend of pink, blue, and lavender creates a calm, dreamy atmosphere, capturing the feeling of freedom and going wherever the wind takes you.\n\n• Original hand-painted artwork\n• Medium: Acrylic on canvas\n• Finish: Gloss varnished for added protection",
   },
   {
     id: 4,
-    img: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=800&q=80", 
-    title: "Forest Canopy",
-    price: "₹2,800",
-    size: "8x10 inches",
+    img: Ocean,
+    title: "Ocean serenity",
+    price: "₹3,200",
+    size: "8 inches (Circle)",
     availability: "Available",
-    story: "A vibrant exploration of the deep greens and dappled sunlight found deep within the woods."
+    story:
+      "A handmade ocean-inspired painting capturing the movement and depth of waves in shades of deep blue, turquoise and white. The textured brushwork gives the waves a dynamic, flowing feel.\n\n• Medium: Acrylic on canvas\n• Theme: Ocean / Seascape\n• Textured brushwork and layered details\n• Carefully packed for shipping",
   },
   {
     id: 5,
-    img: "https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=800&q=80", 
-    title: "Pink Sunset",
-    price: "₹4,000",
-    size: "12x12 inches",
+    img: Echoes_of_Ocean,
+    title: "Echoes of the endless ocean",
+    price: "₹8,400",
+    size: "32 cm × 22.5 cm (12.5 in × 8.8 in)",
     availability: "Available",
-    story: "Sometimes the sky turns a shade of pink that feels almost surreal. I tried to mix that exact shade here."
+    story:
+      "Bring the serene, hypnotic rhythm of the deep sea into your home with Echoes of the Endless Ocean. Painted with rich, layered acrylics, this piece captures the continuous movement of calm ocean waves under a vibrant blue sky—a perfect statement artwork to bring tranquil energy to any desk, shelf, or wall space.\n\n• Medium: Acrylic on canvas (framed)\n• Style: Contemporary Seascapes / Realism\n• Includes: 1 x Original hand-painted canvas in a dark wooden frame with gold trim.",
   },
   {
     id: 6,
-    img: "https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?w=800&q=80", 
-    title: "Quiet Morning",
-    price: "₹3,500",
-    size: "10x14 inches",
-    availability: "Sold Out",
-    story: "Capturing the stillness of a misty morning just as the world is starting to wake up."
-  }
+    img: Loves_Waves,
+    title: "Love beyond the waves",
+    price: "₹2,300",
+    size: "15.2 cm × 15.2 cm (6 in × 6 in)",
+    availability: "Available",
+    story:
+      "Bring a touch of charm and color into your home with this hand-painted heart piece. Painted with rich, layered acrylics, this artwork captures vibrant textures and peaceful energy—a perfect statement accent to elevate any desk, shelf, or wall space.\n\n• Medium: Acrylic on canvas board\n• Style: Contemporary Fine Art\n• Finish: Gloss varnished for protection",
+  },
+  {
+    id: 7,
+    img: Latic_Afterglow,
+    title: "Lilac afterglow",
+    price: "₹2,799",
+    size: "8 in diameter (20.3 cm)",
+    availability: "Available",
+    story:
+      "Lilac afterglow captures a dreamy sunset painted in rich shades of lilac, deep purple, and fiery orange gradient lights above rolling ocean waves. Soft clouds and gentle, foamy surf meet vibrant horizon tones to bring a serene and magical escape directly into your space. Signed on the back. 💜🌅\n\n• Original acrylic painting on round canvas\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
+  },
+  {
+    id: 8,
+    img: Moonlit_clouds,
+    title: "Moonlit clouds",
+    price: "₹1,890",
+    size: "6 in diameter (15.2 cm)",
+    availability: "Available",
+    story:
+      "Moonlit clouds brings to life a glowing crescent moon nestled over deep blue, velvety clouds scattered with twinkling stars. Filled with soft textures and night sky magic, this piece adds a calming touch of wonder to any cozy corner. Signed on the back. 🌙☁️✨\n\n• Original acrylic painting on round canvas\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
+  },
+  {
+    id: 9,
+    img: Twilight,
+    title: "Twilight in a heartbeat",
+    price: "₹4,789",
+    size: "8 in (20.3 cm)",
+    availability: "Available",
+    story:
+      "Twilight in a heartbeat paints a breathtaking dusk horizon across a heart-shaped view, where vivid fiery orange and deep magenta fade into soft twilight purples and starry blue skies. A delicate crescent moon glows over smooth, reflective ocean waves to bring a romantic touch of evening tranquility into your home. Signed on the back. 💖🌙🌊\n\n• Original acrylic painting on heart-shaped stretched canvas\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
+  },
+  {
+    id: 10,
+    img: Dreaming_tides,
+    title: "Dreaming tides",
+    price: "₹1,169",
+    size: "6 × 6 in (15.2 × 15.2 cm)",
+    availability: "Available",
+    story:
+      "Dreaming tides showcases a full golden moon suspended over tranquil blue ocean waters, casting a soft shimmering reflection along gentle waves. Smooth color gradients and delicate foamy shorelines come together to create a soothing, peaceful escape for your space. Signed on the back. 🌕🌊✨\n\n• Original acrylic painting on canvas\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
+  },
+  {
+    id: 11,
+    img:Moonlit, 
+    title: "Moonlit dancing across violet waves",
+    price: "₹1,150",
+    size: "6 × 6 in (15.2 × 15.2 cm)",
+    availability: "Available",
+    story:
+      "Moonlit dancing across violet waves presents a full, luminescent moon casting a brilliant path of light across sculpted violet ocean waves. Velvety purple gradients and sparkling reflections create a serene, enchanting nightscape designed to bring a touch of magical calm to your space. Signed on the back. 💜🌕🌊\n\n• Original acrylic painting on canvas\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
+  },
 ];

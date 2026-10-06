@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 // Fixed the filenames to match what is actually in your assets folder!
-import Img_Sunset from '../assets/Images/94134.jpg';
+import Radha_Krishna from '../assets/Images/5134.jpg';
 import Img_Nature from '../assets/Images/94264.jpg';
 import Img_Night_Beach from '../assets/Images/82673.png';
+import Img_View from '../assets/Images/94134.jpg';
 
 export default function FeaturedImage() {
   const images = [
-    Img_Sunset,
+    Radha_Krishna,
     Img_Nature,
-    Img_Night_Beach
+    Img_Night_Beach,
+    Img_View
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -5,8 +5,9 @@ export default function ContactSection({ openIG, openFB, openYT, openMail }) {
   return (
     <section className="section container text-center">
       <div className="contact-box">
+        {/* ✨ Updated Heading */}
         <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '1.5rem'}}>
-          Art Commissions & Collaborations
+          Commissions
         </h2>
         
         <p className="text-muted" style={{maxWidth: '550px', margin: '0 auto 2.5rem', lineHeight: '1.7', fontSize: '1.05rem'}}>

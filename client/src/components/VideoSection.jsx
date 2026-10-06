@@ -31,12 +31,9 @@ export default function VideoSection() {
 
   return (
     <section className="section container text-center">
-      {/* Updated Heading exactly as requested */}
-      <h2 className="font-serif" style={{ fontSize: '2.5rem', marginBottom: '2.5rem' }}>
-        Art Process Videos
-      </h2>
+      {/* ✨ Heading left completely empty as requested */}
       
-      <div className="video-container">
+      <div className="video-container" style={{ marginTop: '1rem' }}>
         {playlist.map((src, index) => (
           <div 
             key={index}
