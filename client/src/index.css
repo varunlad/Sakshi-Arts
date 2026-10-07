@@ -270,3 +270,33 @@ textarea.form-input {
 .toast-error {
   background-color: #D9886A;
 }
+
+/* ==========================================
+   🎨 CUSTOM FONTS: Mermaid & A Pompadour
+   ========================================== */
+@font-face {
+  font-family: 'Mermaid';
+  src: url('./assets/fonts/mermaid.ttf') format('truetype');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'A Pompadour';
+  src: url('./assets/fonts/pompadour.ttf') format('truetype');
+  font-weight: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-serif: 'Mermaid', serif !important;
+  --font-sans: 'A Pompadour', sans-serif !important;
+}
+
+body, p, span, input, textarea, button, .text-muted, .stat-label {
+  font-family: var(--font-sans) !important;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-serif) !important;
+}
