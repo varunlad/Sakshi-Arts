@@ -1,15 +1,15 @@
+// 1. CRITICAL: This MUST be the absolute first line of code.
+// It forces the Render server to use IPv4 before Nodemailer loads, 
+// preventing the 'ENETUNREACH' crash, but leaves your local machine alone.
+if (process.env.RENDER) {
+  require('dns').setDefaultResultOrder('ipv4first');
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-
-// ✨ SMART FIX: Only force IPv4 when running on Render!
-// This prevents the 'ENETUNREACH' error in production but 
-// leaves your local computer's network untouched so it doesn't break locally.
-if (process.env.RENDER) {
-  require('dns').setDefaultResultOrder('ipv4first');
-}
 
 const Analytics = require('./models/Analytics');
 const Lead = require('./models/Lead');
@@ -27,6 +27,9 @@ mongoose.connect(DB_URI)
     console.error(err.message);
   });
 
+// =====================================
+// ROUTE 1: Capture Behavioral Analytics
+// =====================================
 app.post('/api/analytics', async (req, res) => {
   try {
     const { eventName, eventData, userAgent } = req.body;
@@ -38,6 +41,9 @@ app.post('/api/analytics', async (req, res) => {
   }
 });
 
+// =====================================
+// ROUTE 2: Capture Personal Leads/Inquiries + Email Alert
+// =====================================
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
@@ -46,11 +52,13 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'All fields are required.' });
     }
 
+    // 1. Save to Database
     const newLead = new Lead({ name, email, message });
     await newLead.save();
 
+    // 2. Send Email Notification to the Artist
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      // ✨ SMART FIX: Reverted to the standard, reliable Gmail service setting
+      // Clean, unmixed configuration from your working develop branch
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -61,10 +69,16 @@ app.post('/api/contact', async (req, res) => {
 
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER, 
-        replyTo: email,             
+        to: process.env.EMAIL_USER,
+        replyTo: email,
         subject: `🎨 New Art Commission Request from ${name}`,
-        text: `You have a new message from your portfolio website!\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+        text: `You have a new message from your portfolio website!
+
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}`
       };
 
       await transporter.sendMail(mailOptions);

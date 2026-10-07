@@ -84,7 +84,7 @@ export default function ContactSection({ openIG, openFB, openYT, openMail }) {
 
         <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '1rem'}}>
 
-          Commissions
+          Contact
 
         </h2>
 
