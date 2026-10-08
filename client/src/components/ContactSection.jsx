@@ -38,7 +38,7 @@ export default function ContactSection({ openIG, openFB, openYT, openMail }) {
 
     try {
 
-      const response = await fetch('https://sakshi-arts-backend.onrender.com/api/contact', {
+      const response = await fetch('/api/contact', {
 
         method: 'POST',
 
