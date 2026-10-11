@@ -155,23 +155,14 @@ export default function App() {
                     <>
                       {modalArt.price}{" "}
                       <span
-                        className="price-only <span style={{ display: 'inline-block', padding: '2px 8px', backgroundColor: '#fdf3e7', color: '#d9886a', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold', marginLeft: '8px', border: '1px solid #fae8d4', verticalAlign: 'middle', textTransform: 'uppercase', letterSpacing: '0.5px' }}>✨ Handmade</span>-text"
-                        style={{ color: "var(--ink)" }}
-                      >
-                        only
-                      </span>
-                      <span
                         style={{
-                          marginLeft: "8px",
-                          display: "inline-block",
-                          padding: "2px 8px",
-                          color: "#2E7D32",
-                          backgroundColor: "#FDECE8",
-                          borderRadius: "4px",
-                          fontSize: "1rem",
+                          fontSize: "0.9rem",
+                          color: "var(--muted, #666)",
+                          marginLeft: "6px",
+                          fontStyle: "italic",
                         }}
                       >
-                        Hand Painted
+                        + shipping
                       </span>
                     </>
                   ) : (
