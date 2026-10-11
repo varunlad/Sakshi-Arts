@@ -1,235 +1,76 @@
 #!/usr/bin/env python3
 import os
+import re
 
 def main():
     print("=" * 60)
-    print("✨ Applying final Server solution with correct load order...")
+    print("✨ Moving T&C Note to be inline with the description text...")
     print("=" * 60)
 
-    server_content = """// 1. CRITICAL: This MUST be the absolute first line of code.
-// It forces the Render server to use IPv4 before Nodemailer loads, 
-// preventing the 'ENETUNREACH' crash, but leaves your local machine alone.
-if (process.env.RENDER) {
-  require('dns').setDefaultResultOrder('ipv4first');
-}
+    # 1. Find the modal file
+    target_file = None
+    for root, dirs, files in os.walk("client/src"):
+        for file in files:
+            if file.endswith(".jsx"):
+                path = os.path.join(root, file)
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        if "DM to Buy" in f.read():
+                            target_file = path
+                            break
+                except Exception:
+                    pass
+        if target_file:
+            break
 
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
-require('dotenv').config();
+    if not target_file:
+        print("  [-] Could not find the file containing the modal.")
+        return
 
-const Analytics = require('./models/Analytics');
-const Lead = require('./models/Lead');
+    with open(target_file, "r", encoding="utf-8") as f:
+        content = f.read()
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+    # 2. Clean up any previous attempts (removes both <div> and <p> versions of the old note)
+    content = re.sub(r'\{\/\*\s*T&C Note\s*\*\/\}.*?<\/div>', '', content, flags=re.DOTALL)
+    content = re.sub(r'\{\/\*\s*T&C Note\s*\*\/\}.*?<\/p>\s*(?=<div|<button)', '', content, flags=re.DOTALL)
 
-const DB_URI = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/art_portfolio';
-
-mongoose.connect(DB_URI)
-  .then(() => console.log('✅ Connected to MongoDB Atlas'))
-  .catch(err => {
-    console.error('❌ MongoDB connection error: Ensure your IP is whitelisted in Atlas!');
-    console.error(err.message);
-  });
-
-// =====================================
-// ROUTE 1: Capture Behavioral Analytics
-// =====================================
-app.post('/api/analytics', async (req, res) => {
-  try {
-    const { eventName, eventData, userAgent } = req.body;
-    const newEvent = new Analytics({ eventName, eventData, userAgent });
-    await newEvent.save();
-    res.status(200).json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to log analytics' });
-  }
-});
-
-// =====================================
-// ROUTE 2: Capture Personal Leads/Inquiries + Email Alert
-// =====================================
-app.post('/api/contact', async (req, res) => {
-  try {
-    const { name, email, message } = req.body;
+    # 3. Inject the clean, inline text note directly after the description paragraph
+    # We find the "DM to Buy" buttons, find the closing </p> of the description right above it,
+    # and insert a plain text <p> with no borders or fixed positioning.
     
-    if (!name || !email || !message) {
-      return res.status(400).json({ error: 'All fields are required.' });
-    }
+    clean_inline_note = """
+            {/* Inline T&C Note */}
+            <p style={{ marginTop: '0.8rem', marginBottom: '1.5rem', fontSize: '0.85rem', color: '#666', fontStyle: 'italic', lineHeight: '1.5' }}>
+              * Please note: All artworks are original and hand-painted. Please read our <button type="button" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-terms')); }} style={{ background: 'none', border: 'none', color: '#D9886A', textDecoration: 'underline', cursor: 'pointer', padding: 0, fontStyle: 'italic' }}>Terms and Conditions</button> before purchasing.
+            </p>"""
 
-    // 1. Save to Database
-    const newLead = new Lead({ name, email, message });
-    await newLead.save();
+    lines = content.split('\n')
+    button_idx = -1
+    paragraph_idx = -1
 
-    // 2. Send Email Notification to the Artist
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      // Clean, unmixed configuration from your working develop branch
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
-        }
-      });
-
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER,
-        replyTo: email,
-        subject: `🎨 New Art Commission Request from ${name}`,
-        text: `You have a new message from your portfolio website!
-
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}`
-      };
-
-      await transporter.sendMail(mailOptions);
-    }
-
-    res.status(200).json({ success: true, message: 'Lead captured and email sent successfully' });
-  } catch (error) {
-    console.error('Submission Error:', error);
-    res.status(500).json({ error: 'Failed to submit form' });
-  }
-});
-
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://127.0.0.1:${PORT}`);
-});
-"""
-
-    file_path = "server/server.js"
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(server_content)
+    for i, line in enumerate(lines):
+        if "DM to Buy" in line:
+            button_idx = i
+            break
+            
+    if button_idx != -1:
+        # Walk backwards to find the description's closing </p>
+        for j in range(button_idx, -1, -1):
+            if "</p>" in lines[j]:
+                paragraph_idx = j
+                break
+                
+    if paragraph_idx != -1:
+        lines.insert(paragraph_idx + 1, clean_inline_note)
+        content = '\n'.join(lines)
         
-    print(f"  [+] Overwrote: {file_path}")
-    print("\n✅ Success! The DNS fix is correctly positioned at the top of the file.")
+        with open(target_file, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"  [+] Successfully injected the inline T&C Note after the description in {os.path.basename(target_file)}")
+    else:
+        print("  [-] Could not find the description paragraph (</p>) to attach the note to.")
 
-if __name__ == "__main__":
-    main()#!/usr/bin/env python3
-import os
-
-def main():
-    print("=" * 60)
-    print("✨ Applying final Server solution with correct load order...")
-    print("=" * 60)
-
-    server_content = """// 1. CRITICAL: This MUST be the absolute first line of code.
-// It forces the Render server to use IPv4 before Nodemailer loads, 
-// preventing the 'ENETUNREACH' crash, but leaves your local machine alone.
-if (process.env.RENDER) {
-  require('dns').setDefaultResultOrder('ipv4first');
-}
-
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
-require('dotenv').config();
-
-const Analytics = require('./models/Analytics');
-const Lead = require('./models/Lead');
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-const DB_URI = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/art_portfolio';
-
-mongoose.connect(DB_URI)
-  .then(() => console.log('✅ Connected to MongoDB Atlas'))
-  .catch(err => {
-    console.error('❌ MongoDB connection error: Ensure your IP is whitelisted in Atlas!');
-    console.error(err.message);
-  });
-
-// =====================================
-// ROUTE 1: Capture Behavioral Analytics
-// =====================================
-app.post('/api/analytics', async (req, res) => {
-  try {
-    const { eventName, eventData, userAgent } = req.body;
-    const newEvent = new Analytics({ eventName, eventData, userAgent });
-    await newEvent.save();
-    res.status(200).json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to log analytics' });
-  }
-});
-
-// =====================================
-// ROUTE 2: Capture Personal Leads/Inquiries + Email Alert
-// =====================================
-app.post('/api/contact', async (req, res) => {
-  try {
-    const { name, email, message } = req.body;
-    
-    if (!name || !email || !message) {
-      return res.status(400).json({ error: 'All fields are required.' });
-    }
-
-    // 1. Save to Database
-    const newLead = new Lead({ name, email, message });
-    await newLead.save();
-
-    // 2. Send Email Notification to the Artist
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      // Clean, unmixed configuration from your working develop branch
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
-        }
-      });
-
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER,
-        replyTo: email,
-        subject: `🎨 New Art Commission Request from ${name}`,
-        text: `You have a new message from your portfolio website!
-
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}`
-      };
-
-      await transporter.sendMail(mailOptions);
-    }
-
-    res.status(200).json({ success: true, message: 'Lead captured and email sent successfully' });
-  } catch (error) {
-    console.error('Submission Error:', error);
-    res.status(500).json({ error: 'Failed to submit form' });
-  }
-});
-
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://127.0.0.1:${PORT}`);
-});
-"""
-
-    file_path = "server/server.js"
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(server_content)
-        
-    print(f"  [+] Overwrote: {file_path}")
-    print("\n✅ Success! The DNS fix is correctly positioned at the top of the file.")
+    print("\n✅ Success! The note will now flow naturally as part of the description text.")
 
 if __name__ == "__main__":
     main()

@@ -18,7 +18,7 @@ export default function Reviews() {
               "Each piece has such a different feel to it. I love the bold colours, textures, and different styles. You can really see the thought and effort behind every little detail. So happy to have these beautiful pieces of your art with me."
             </p>
           </div>
-          <p className="font-hand" style={{ fontSize: '1.3rem', color: '#D9886A', marginTop: '1.5rem' }}>- Pooja</p>
+          <p className="font-hand" style={{ fontSize: '1rem', color: '#D9886A', marginTop: '1.5rem' }}>- Pooja</p>
         </div>
 
         <div className="review-card">
@@ -30,7 +30,7 @@ export default function Reviews() {
               "The colours are so vibrant and the details in the waves and sunset are beautiful. The quality is excellent, and they look even better in person. Such lovely beach vibes!"
             </p>
           </div>
-          <p className="font-hand" style={{ fontSize: '1.3rem', color: '#D9886A', marginTop: '1.5rem' }}>- Daksha</p>
+          <p className="font-hand" style={{ fontSize: '1rem', color: '#D9886A', marginTop: '1.5rem' }}>- Daksha</p>
         </div>
 
         <div className="review-card">
@@ -42,7 +42,7 @@ export default function Reviews() {
               "Loved how it turned out! The creativity and colour combinations brought the painting to life in such a beautiful way."
             </p>
           </div>
-          <p className="font-hand" style={{ fontSize: '1.3rem', color: '#D9886A', marginTop: '1.5rem' }}>- Harshal</p>
+          <p className="font-hand" style={{ fontSize: '1rem', color: '#D9886A', marginTop: '1.5rem' }}>- Harshal</p>
         </div>
       </div>
     </section>

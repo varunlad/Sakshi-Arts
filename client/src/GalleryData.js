@@ -41,7 +41,7 @@ export const paintings = [
     title: "Stillness beyond the pines",
     price: "₹3,400",
     size: "10 inch oval canvas board",
-    availability: "Available",
+    availability: "Sold Out",
     story:
       "A dreamy hand-painted scene inspired by the gentle beauty of nature. A delicate feather drifts across a soft pastel sky, floating above a peaceful forest of pine trees. The blend of pink, blue, and lavender creates a calm, dreamy atmosphere, capturing the feeling of freedom and going wherever the wind takes you.\n\n• Original hand-painted artwork\n• Medium: Acrylic on canvas\n• Finish: Gloss varnished for added protection",
   },
@@ -81,7 +81,7 @@ export const paintings = [
     title: "Lilac afterglow",
     price: "₹2,799",
     size: "8 inch diameter (20.3 cm)",
-    availability: "Available",
+    availability: "Sold Out",
     story:
       "Lilac afterglow captures a dreamy sunset painted in rich shades of lilac, deep purple, and fiery orange gradient lights above rolling ocean waves. Soft clouds and gentle, foamy surf meet vibrant horizon tones to bring a serene and magical escape directly into your space. Signed on the back. 💜🌅\n\n• Original acrylic painting on round canvas\n• Sealed with a protective varnish\n• Carefully packaged for shipping",
   },

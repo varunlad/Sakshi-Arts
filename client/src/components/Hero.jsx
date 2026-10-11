@@ -109,12 +109,12 @@ export default function Hero({ openIG, openFB, openYT }) {
       {/* ✨ UPDATED: Consolidated Stats Area */}
       <div className="reveal-3 hero-stats">
         <div className="stat-item">
-          <AnimatedCounter end={53} suffix="K+" />
+          <AnimatedCounter end={55} suffix="K+" />
           <span className="stat-label">Followers</span>
         </div>
         <div className="stat-divider"></div>
         <div className="stat-item">
-          <AnimatedCounter end={22.6} suffix="M+" />
+          <AnimatedCounter end={23.25} suffix="M+" />
           <span className="stat-label">Views</span>
         </div>
       </div>
