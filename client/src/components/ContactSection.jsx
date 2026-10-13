@@ -46,7 +46,7 @@ export default function ContactSection({ openIG, openFB, openYT }) {
         </h2>
         
         <p className="text-muted" style={{maxWidth: '550px', margin: '0 auto 2rem', lineHeight: '1.7', fontSize: '1.05rem'}}>
-          Every painting tells a story. If you're interested in an available piece, want to commission a custom canvas, or discuss a collaboration, I would absolutely love to hear from you.
+         If you're interested in an available piece, want to commission a custom canvas, or discuss a collaboration, I would absolutely love to hear from you.
         </p>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem', textAlign: 'left' }}>
