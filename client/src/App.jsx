@@ -15,9 +15,37 @@ import Gallery from "./components/Gallery";
 import VideoSection from "./components/VideoSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import ShareButton from "./components/ShareButton";
+import CopyButton from "./components/CopyButton";
+import { paintings } from "./GalleryData";
 
 export default function App() {
   const [modalArt, setModalArt] = useState(null);
+
+  // Open a painting directly when the page is visited via a shared link (?painting=ID)
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("painting");
+    if (id) {
+      const art = paintings.find((p) => String(p.id) === id);
+      if (art) {
+        setModalArt(art);
+        trackEvent("shared_link_open", { paintingTitle: art.title });
+        setTimeout(() => smoothScrollTo("gallery"), 100);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Keep the address bar in sync so the current URL is always shareable
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (modalArt) {
+      url.searchParams.set("painting", modalArt.id);
+    } else {
+      url.searchParams.delete("painting");
+    }
+    window.history.replaceState({}, "", url);
+  }, [modalArt]);
 
   useEffect(() => {
     trackEvent("page_view");
@@ -120,6 +148,9 @@ export default function App() {
             <button className="modal-close" onClick={() => setModalArt(null)}>
               <X size={20} />
             </button>
+
+            <ShareButton painting={modalArt} variant="modal" />
+            <CopyButton painting={modalArt} variant="modal" />
 
             <div
               className="modal-left"

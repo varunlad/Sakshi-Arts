@@ -300,3 +300,46 @@ body, p, span, input, textarea, button, .text-muted, .stat-label {
 h1, h2, h3, h4, h5, h6, .font-serif {
   font-family: var(--font-serif) !important;
 }
+
+/* ===== Share feature v2 ===== */
+/* Elegant translucent glass icon buttons (readable on both light and dark paintings) */
+.share-btn, .modal-close { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; background: rgba(24, 18, 14, 0.30); border: 1px solid rgba(255, 255, 255, 0.45); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18); transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease; padding: 0; }
+.share-btn:hover, .modal-close:hover { background: rgba(24, 18, 14, 0.50); border-color: rgba(255, 255, 255, 0.7); transform: scale(1.08); }
+.share-btn:focus-visible, .modal-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.share-btn svg, .modal-close svg { filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35)); }
+
+/* On a painting card: small circle, top-right corner of the image */
+.share-btn-card { position: absolute; top: 1.4rem; right: 1.4rem; width: 34px; height: 34px; border-radius: 50%; z-index: 5; }
+
+/* In the painting popup: share sits top-left of the image, close stays top-right, same size */
+.share-btn-modal { position: absolute; top: 1.2rem; left: 1.2rem; width: 38px; height: 38px; border-radius: 50%; z-index: 10; }
+.modal-close:hover { transform: scale(1.08) rotate(90deg); background: rgba(24, 18, 14, 0.50); }
+
+/* Share menu (desktop / fallback) */
+.share-overlay { position: fixed; inset: 0; z-index: 3000; background: rgba(30, 25, 23, 0.6); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 1rem; animation: fadeIn 0.25s forwards; }
+.share-sheet { position: relative; width: 100%; max-width: 380px; border-radius: 20px; padding: 1.8rem 1.5rem 1.5rem; background: rgba(250, 247, 242, 0.97); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3); text-align: center; animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.share-sheet-close { position: absolute; top: 0.9rem; right: 0.9rem; width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(0, 0, 0, 0.06); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.share-sheet-title { font-size: 1.5rem; color: var(--ink); }
+.share-sheet-sub { font-size: 0.9rem; color: var(--muted); margin: 0.2rem 0 1.3rem; font-style: italic; }
+.share-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+.share-option { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; background: none; border: none; cursor: pointer; font-size: 0.78rem; color: var(--ink); font-family: var(--font-sans); }
+.share-icon { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; transition: transform 0.25s ease; }
+.share-option:hover .share-icon { transform: translateY(-3px) scale(1.06); }
+.share-notice { margin-top: 1.2rem; font-size: 0.85rem; color: #2E7D32; font-weight: 500; line-height: 1.5; }
+.share-notice a { color: var(--sunset-dark); text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .share-btn-card { top: 0.9rem; right: 0.9rem; width: 30px; height: 30px; }
+  .share-btn-modal { top: 0.8rem; left: 0.8rem; width: 34px; height: 34px; }
+  .share-option { font-size: 0.72rem; }
+  .share-icon { width: 46px; height: 46px; }
+}
+/* Copy button: only inside the painting popup, next to the share button */
+.copy-btn { position: absolute; }
+.copy-btn-modal { top: 1.2rem; left: calc(1.2rem + 38px + 10px); width: 38px; height: 38px; border-radius: 50%; z-index: 10; }
+.copy-tip { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em; color: #fff; background: rgba(24, 18, 14, 0.82); padding: 4px 10px; border-radius: 12px; pointer-events: none; animation: fadeIn 0.2s forwards; }
+@media (max-width: 600px) {
+  .copy-btn-modal { top: 0.8rem; left: calc(0.8rem + 34px + 8px); width: 34px; height: 34px; }
+  .copy-btn-modal .copy-tip { left: 0; transform: none; }
+}
+/* ===== End share feature ===== */

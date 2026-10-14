@@ -14,7 +14,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="footer-section container text-center" style={{ padding: '3rem 1.5rem', borderTop: '1px solid #eaeaea', marginTop: '3rem' }}>
+      <footer className="footer-section container text-center" style={{ padding: '1.5rem 1.5rem 2rem', borderTop: '1px solid #eaeaea', marginTop: '0.5rem' }}>
         <div style={{ maxWidth: '500px', margin: '0 auto' }}>
           
           <h3 className="font-serif" style={{ fontSize: '1.6rem', color: '#333', marginBottom: '0.5rem' }}>

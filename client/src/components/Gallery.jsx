@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { paintings } from '../GalleryData';
 import { trackEvent } from '../analytics';
+import ShareButton from './ShareButton';
 
 export default function Gallery({ setModalArt, smoothScrollTo }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,6 +53,8 @@ export default function Gallery({ setModalArt, smoothScrollTo }) {
           <div key={p.id} className="art-card" onClick={() => { setModalArt(p); trackEvent('painting_view', { paintingTitle: p.title }); }}>
             
             <img src={p.img} alt={p.title} loading="lazy" draggable={false} onContextMenu={(e) => e.preventDefault()} />
+
+            <ShareButton painting={p} variant="card" />
             
             <div className="art-info">
               <h3 className="font-serif">{p.title}</h3>
