@@ -42,7 +42,7 @@ export default function ContactSection({ openIG, openFB, openYT }) {
     <section className="section container text-center">
       <div className="contact-box" style={{ maxWidth: '650px', position: 'relative', margin: '0 auto' }}>
         <h2 className="font-serif" style={{fontSize: '2.5rem', marginBottom: '1rem'}}>
-          Commissions
+          Contact
         </h2>
         
         <p className="text-muted" style={{maxWidth: '550px', margin: '0 auto 2rem', lineHeight: '1.7', fontSize: '1.05rem'}}>
@@ -132,7 +132,7 @@ export default function ContactSection({ openIG, openFB, openYT }) {
 
         <div className="stat-divider" style={{ width: '100%', height: '1px', margin: '0 auto 2rem', backgroundColor: 'var(--border)' }}></div>
 
-        <p className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '1rem', fontWeight: '500' }}>Connect across platforms:</p>
+        <p className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '1rem', fontWeight: '500' }}>Connect across platforms</p>
         <div className="social-pills-row">
           <button className="social-pill-icon" onClick={openIG} title="Instagram"><Instagram size={20} /></button>
           <button className="social-pill-icon" onClick={openFB} title="Facebook"><Facebook size={20} /></button>
