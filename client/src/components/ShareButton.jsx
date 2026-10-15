@@ -186,7 +186,7 @@ export default function ShareButton({ painting, variant = 'card' }) {
                   Instagram
                 </button>
                 <button type="button" className="share-option" onClick={copyLink}>
-                  <span className="share-icon" style={{ background: 'var(--ink)' }}>
+                  <span className="share-icon" style={{ background: 'var(--btn-bg, var(--ink))' }}>
                     {copied ? <Check size={20} /> : <LinkIcon size={20} />}
                   </span>
                   Copy link

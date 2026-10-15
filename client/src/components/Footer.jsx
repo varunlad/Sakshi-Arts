@@ -14,18 +14,18 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="footer-section container text-center" style={{ padding: '1.5rem 1.5rem 2rem', borderTop: '1px solid #eaeaea', marginTop: '0.5rem' }}>
+      <footer className="footer-section container text-center" style={{ padding: '1.5rem 1.5rem 2rem', borderTop: '1px solid var(--border)', marginTop: '0.5rem' }}>
         <div style={{ maxWidth: '500px', margin: '0 auto' }}>
           
-          <h3 className="font-serif" style={{ fontSize: '1.6rem', color: '#333', marginBottom: '0.5rem' }}>
+          <h3 className="font-serif" style={{ fontSize: '1.6rem', color: 'var(--ink)', marginBottom: '0.5rem' }}>
             Sakshi Lad
           </h3>
 
-          <div style={{ fontSize: '0.85rem', color: '#666' }}>
+          <div style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>
             <p style={{ marginBottom: '0.5rem' }}>© {new Date().getFullYear()} Sakshi Lad. All rights reserved.</p>
             <button 
               onClick={() => setIsTermsOpen(true)} 
-              style={{ background: 'none', border: 'none', color: '#D9886A', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.85rem', padding: 0 }}
+              style={{ background: 'none', border: 'none', color: 'var(--sunset)', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.85rem', padding: 0 }}
             >
               Terms & Conditions
             </button>

@@ -15,6 +15,7 @@ import Gallery from "./components/Gallery";
 import VideoSection from "./components/VideoSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import ThemeToggle from "./components/ThemeToggle";
 import ShareButton from "./components/ShareButton";
 import CopyButton from "./components/CopyButton";
 import { paintings } from "./GalleryData";
@@ -117,6 +118,7 @@ export default function App() {
 
   return (
     <div>
+      <ThemeToggle />
       <div className="ambient-bg">
         <div className="ambient-glow-1"></div>
         <div className="ambient-glow-2"></div>
@@ -177,7 +179,7 @@ export default function App() {
                   className="font-serif"
                   style={{
                     fontSize: "1.4rem",
-                    color: "#2E7D32",
+                    color: "var(--success-fg)",
                     fontWeight: "bold",
                     marginBottom: "1.2rem",
                   }}
@@ -204,7 +206,7 @@ export default function App() {
                 {modalArt.availability !== "Sold Out" && (
                   <div
                     style={{
-                      background: "#FDECE8",
+                      background: "var(--promo-bg)",
                       color: "var(--sunset-dark)",
                       padding: "0.6rem 1rem",
                       borderRadius: "8px",
@@ -241,7 +243,7 @@ export default function App() {
                         color:
                           modalArt.availability === "Sold Out"
                             ? "var(--muted)"
-                            : "#2E7D32",
+                            : "var(--success-fg)",
                         fontWeight: "bold",
                       }}
                     >
@@ -279,7 +281,7 @@ export default function App() {
                     style={{
                       background: "none",
                       border: "none",
-                      color: "#D9886A",
+                      color: "var(--sunset)",
                       textDecoration: "underline",
                       cursor: "pointer",
                       padding: 0,

@@ -65,8 +65,8 @@ export default function Gallery({ setModalArt, smoothScrollTo }) {
                 </p>
                 
                 <span className="availability-badge" style={{ 
-                  background: p.availability === 'Sold Out' ? '#EAE5DF' : '#E8F5E9',
-                  color: p.availability === 'Sold Out' ? 'var(--muted)' : '#2E7D32'
+                  background: p.availability === 'Sold Out' ? 'var(--sold-bg)' : 'var(--success-bg)',
+                  color: p.availability === 'Sold Out' ? 'var(--muted)' : 'var(--success-fg)'
                 }}>
                   {p.availability}
                 </span>

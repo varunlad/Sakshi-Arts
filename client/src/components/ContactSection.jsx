@@ -98,7 +98,7 @@ export default function ContactSection({ openIG, openFB, openYT }) {
             <div style={{ 
               textAlign: 'right', 
               fontSize: '0.75rem', 
-              color: formData.message.length >= 500 ? '#d93025' : 'var(--muted)', 
+              color: formData.message.length >= 500 ? 'var(--danger)' : 'var(--muted)', 
               marginTop: '4px' 
             }}>
               {formData.message.length}/500
@@ -133,18 +133,18 @@ export default function ContactSection({ openIG, openFB, openYT }) {
         <div className="stat-divider" style={{ width: '100%', height: '1px', margin: '0 auto 2rem', backgroundColor: 'var(--border)' }}></div>
 
         <p className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '1rem', fontWeight: '500' }}>Connect across platforms:</p>
-        <div className="social-pills-row" style={{ justifyContent: 'center', display: 'flex', gap: '1rem' }}>
-          <button className="social-pill-icon" onClick={openIG} title="Instagram" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink)' }}><Instagram size={20} /></button>
-          <button className="social-pill-icon" onClick={openFB} title="Facebook" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink)' }}><Facebook size={20} /></button>
-          <button className="social-pill-icon" onClick={openYT} title="YouTube" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink)' }}><Youtube size={20} /></button>
+        <div className="social-pills-row">
+          <button className="social-pill-icon" onClick={openIG} title="Instagram"><Instagram size={20} /></button>
+          <button className="social-pill-icon" onClick={openFB} title="Facebook"><Facebook size={20} /></button>
+          <button className="social-pill-icon" onClick={openYT} title="YouTube"><Youtube size={20} /></button>
         </div>
       </div>
 
       {toast && (
         <div className={`toast-notification toast-${toast.type}`} style={{
           position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)',
-          backgroundColor: toast.type === 'success' ? '#e8f5e9' : '#fdece8',
-          color: toast.type === 'success' ? '#2e7d32' : '#d93025',
+          backgroundColor: toast.type === 'success' ? 'var(--success-bg)' : 'var(--error-bg)',
+          color: toast.type === 'success' ? 'var(--success-fg)' : 'var(--danger)',
           padding: '12px 24px', borderRadius: '50px', display: 'flex', alignItems: 'center', gap: '8px',
           boxShadow: '0 4px 12px rgba(0,0,0,0.1)', zIndex: 1000, fontWeight: 'bold'
         }}>

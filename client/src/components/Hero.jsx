@@ -76,7 +76,7 @@ export default function Hero({ openIG, openFB, openYT }) {
 
       <h1
         className="font-serif reveal-2"
-        style={{ fontSize: "3rem", color: "#D9886A", marginBottom: "1.5rem" }}
+        style={{ fontSize: "3rem", color: "var(--sunset)", marginBottom: "1.5rem" }}
       >
         Sakshi Lad
       </h1>

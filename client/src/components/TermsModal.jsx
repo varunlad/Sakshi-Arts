@@ -20,21 +20,21 @@ export default function TermsModal({ isOpen, onClose }) {
     }} onClick={onClose}>
       
       <div style={{
-        backgroundColor: '#fff', borderRadius: '16px', padding: '2rem',
+        backgroundColor: 'var(--modal-solid)', borderRadius: '16px', padding: '2rem',
         maxWidth: '500px', width: '100%', maxHeight: '80vh', overflowY: 'auto',
         position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.2)', textAlign: 'left'
       }} onClick={e => e.stopPropagation()}>
         
         <button onClick={onClose} style={{
           position: 'absolute', top: '1rem', right: '1rem', background: 'none', 
-          border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: '#666'
+          border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: 'var(--muted)'
         }}>
           &times;
         </button>
 
-        <h3 className="font-serif" style={{ fontSize: '1.8rem', color: '#333', marginBottom: '1rem', marginTop: 0 }}>Terms & Conditions</h3>
+        <h3 className="font-serif" style={{ fontSize: '1.8rem', color: 'var(--ink)', marginBottom: '1rem', marginTop: 0 }}>Terms & Conditions</h3>
         
-        <div style={{ fontSize: '0.95rem', color: '#444', lineHeight: '1.6', fontFamily: 'var(--font-sans, sans-serif)' }}>
+        <div style={{ fontSize: '0.95rem', color: 'var(--ink-soft)', lineHeight: '1.6', fontFamily: 'var(--font-sans, sans-serif)' }}>
           <p style={{ marginBottom: '1rem' }}><strong>1. Original Artwork:</strong> All paintings are 100% original, hand-painted acrylic works by Sakshi Lad.</p>
           <p style={{ marginBottom: '1rem' }}><strong>2. Commissions:</strong> Custom commission timelines vary based on size and complexity. A 50% non-refundable deposit is required to begin work.</p>
           <p style={{ marginBottom: '1rem' }}><strong>3. Shipping:</strong> Artworks are carefully packaged and shipped globally. The buyer is responsible for any customs or import taxes that may apply.</p>
