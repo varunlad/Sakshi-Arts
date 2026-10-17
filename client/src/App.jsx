@@ -18,7 +18,9 @@ import Footer from "./components/Footer";
 import ThemeToggle from "./components/ThemeToggle";
 import ShareButton from "./components/ShareButton";
 import CopyButton from "./components/CopyButton";
+import ArtworkCarousel from "./components/ArtworkCarousel";
 import { paintings } from "./GalleryData";
+import { apiUrl } from "./api";
 
 export default function App() {
   const [modalArt, setModalArt] = useState(null);
@@ -26,14 +28,26 @@ export default function App() {
   // Open a painting directly when the page is visited via a shared link (?painting=ID)
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get("painting");
-    if (id) {
-      const art = paintings.find((p) => String(p.id) === id);
-      if (art) {
-        setModalArt(art);
-        trackEvent("shared_link_open", { paintingTitle: art.title });
-        setTimeout(() => smoothScrollTo("gallery"), 100);
-      }
+    if (!id) return;
+    const legacyArt = paintings.find((p) => String(p.id) === id);
+    if (legacyArt) {
+      setModalArt(legacyArt);
+      trackEvent("shared_link_open", { paintingTitle: legacyArt.title });
+      setTimeout(() => smoothScrollTo("gallery"), 100);
+      return;
     }
+    fetch(apiUrl("/api/artworks"))
+      .then((response) => response.ok ? response.json() : [])
+      .then((items) => {
+        const art = Array.isArray(items) ? items.find((item) => String(item.id || item._id) === id) : null;
+        if (art) {
+          const images = Array.isArray(art.images) ? art.images : [];
+          setModalArt({ ...art, id: art.id || art._id, img: art.img || images[0]?.url || "" });
+          trackEvent("shared_link_open", { paintingTitle: art.title });
+          setTimeout(() => smoothScrollTo("gallery"), 100);
+        }
+      })
+      .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -159,7 +173,7 @@ export default function App() {
               onContextMenu={(e) => e.preventDefault()}
               style={{ position: "relative" }}
             >
-              <img src={modalArt.img} alt={modalArt.title} draggable={false} />
+              <ArtworkCarousel artwork={modalArt} className="modal-artwork-carousel" />
             </div>
 
             <div className="modal-right">

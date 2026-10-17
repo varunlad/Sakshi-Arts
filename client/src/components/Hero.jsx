@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Instagram, Facebook, Youtube } from "lucide-react";
 import Hero_Img from "../assets/Images/Hero_Pic.jpeg";
+import { apiUrl } from "../api";
 
 // ✨ UPDATED: Counter will now animate every time the page loads or refreshes (with float support)
 const AnimatedCounter = ({ end, suffix, duration = 2500 }) => {
@@ -58,6 +59,17 @@ const AnimatedCounter = ({ end, suffix, duration = 2500 }) => {
 };
 
 export default function Hero({ openIG, openFB, openYT }) {
+  const [siteStats, setSiteStats] = useState({ followersValue: 55, followersSuffix: "K+", viewsValue: 23.25, viewsSuffix: "M+" });
+
+  useEffect(() => {
+    let active = true;
+    fetch(apiUrl("/api/site-stats"))
+      .then((response) => { if (!response.ok) throw new Error("Stats unavailable"); return response.json(); })
+      .then((stats) => { if (active) setSiteStats((current) => ({ ...current, ...stats })); })
+      .catch(() => {});
+    return () => { active = false; };
+  }, []);
+
   return (
     <header className="hero" style={{ padding: "3rem 1.5rem 2rem" }}>
       <div
@@ -109,12 +121,12 @@ export default function Hero({ openIG, openFB, openYT }) {
       {/* ✨ UPDATED: Consolidated Stats Area */}
       <div className="reveal-3 hero-stats">
         <div className="stat-item">
-          <AnimatedCounter end={55} suffix="K+" />
+          <AnimatedCounter end={Number(siteStats.followersValue)} suffix={siteStats.followersSuffix || ""} />
           <span className="stat-label">Followers</span>
         </div>
         <div className="stat-divider"></div>
         <div className="stat-item">
-          <AnimatedCounter end={23.25} suffix="M+" />
+          <AnimatedCounter end={Number(siteStats.viewsValue)} suffix={siteStats.viewsSuffix || ""} />
           <span className="stat-label">Views</span>
         </div>
       </div>

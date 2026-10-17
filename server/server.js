@@ -106,6 +106,8 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+app.use('/api', require('./routes/artworks'));
+
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT} (resend-mail build)`);

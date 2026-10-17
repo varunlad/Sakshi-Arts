@@ -34,3 +34,7 @@ Thumbs.db
 .idea/
 *.suo
 *.sln
+
+# Local uploaded artwork / secrets
+server/.env
+server/uploads/
