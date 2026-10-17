@@ -37,3 +37,4 @@ Thumbs.db
 
 # Local uploaded artwork / secrets
 server/.env
+server/uploads/
