@@ -273,19 +273,6 @@ textarea.form-input {
 /* ==========================================
    🎨 CUSTOM FONTS: Mermaid & A Pompadour
    ========================================== */
-@font-face {
-  font-family: 'Mermaid';
-  src: url('./assets/fonts/mermaid.ttf') format('truetype');
-  font-weight: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'A Pompadour';
-  src: url('./assets/fonts/pompadour.ttf') format('truetype');
-  font-weight: normal;
-  font-display: swap;
-}
 
 :root {
   --font-serif: 'Mermaid', serif !important;
