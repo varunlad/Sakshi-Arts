@@ -18,7 +18,7 @@ export default function ContactSection({ openIG, openFB, openYT }) {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://sakshi-arts-backend.onrender.com/api/contact', {
+      const response = await fetch('artist-portfolio-gwf9d0v4z-varun-lads-projects.vercel.app/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
